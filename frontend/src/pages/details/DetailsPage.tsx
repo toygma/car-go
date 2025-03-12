@@ -9,10 +9,11 @@ import StarRatings from "react-star-ratings";
 import NotFound from "@/components/custom/NotFound";
 import BookingForm from "./partials/BookingForm";
 import CarReviews from "@/components/reviews/CarReviews";
+import { Dot } from "lucide-react";
 
 const DetailsPage = () => {
   const params = useParams();
-  const { data, loading, error } = useQuery(GET_CAR_BY_ID, {
+  const { data, loading, error, refetch } = useQuery(GET_CAR_BY_ID, {
     variables: {
       carId: params?.id,
       getCarBookedDatesCarId2: params?.id,
@@ -68,6 +69,10 @@ const DetailsPage = () => {
               starDimension={"22px"}
               starSpacing={"1px"}
             />
+            <span className="mt-1 flex items-center justify-center">
+              {ratings?.value} <Dot />
+              {ratings?.count} reviews
+            </span>
             <h2 className="text-xl font-semibold text-gray-400 pt-[3px]">
               {moment(Number(createdAt)).format("ll")}
             </h2>
@@ -137,7 +142,11 @@ const DetailsPage = () => {
           <div className="mt-8 bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Reviews</h2>
             <div className="space-y-4">
-              <CarReviews carId={car?.id}/>
+              <CarReviews
+                carId={car?.id}
+                reviews={car?.reviews}
+                refetchCar={refetch}
+              />
             </div>
           </div>
         </div>

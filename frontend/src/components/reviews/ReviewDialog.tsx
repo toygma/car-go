@@ -24,14 +24,17 @@ import { useEffect, useState } from "react";
 import { toastNotification } from "@/helpers/helpers";
 
 import StarRatings from "react-star-ratings";
+import { IReview } from "shared/src/interfaces";
 
 interface Props {
   buttonText: string;
   carId?: string;
+  review?: IReview;
+  refetchCar: () => void;
 }
 
-export function ReviewDialog({ buttonText, carId }: Props) {
-  const [rating, setRating] = useState(0);
+export function ReviewDialog({ buttonText, carId, review, refetchCar }: Props) {
+  const [rating, setRating] = useState(review?.rating || 0);
 
   const form = useForm<reviewCreateSchema>({
     resolver: zodResolver(reviewSchema),
@@ -45,6 +48,7 @@ export function ReviewDialog({ buttonText, carId }: Props) {
     CREATE_UPDATE_REVIEW_MUTATION,
     {
       onCompleted: () => {
+        refetchCar();
         toast({
           title: "Comment posted",
           variant: "success",
@@ -61,7 +65,7 @@ export function ReviewDialog({ buttonText, carId }: Props) {
 
   const onSubmit = async (data: reviewCreateSchema) => {
     const reviewInput = {
-      rating: rating,
+      rating,
       comment: data.comment,
       car: carId,
     };

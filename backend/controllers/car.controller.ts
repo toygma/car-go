@@ -7,7 +7,10 @@ import { NotFoundError } from "../utils/errorHandler";
 export const getAllCars = catchAsyncErrors(
   async (page: number, filters: CarFilters, query: string) => {
     const resPerPage = 4;
-    const searchQuery = new APIFilters(Car).search(query).filters(filters);
+    const searchQuery = new APIFilters(Car)
+      .search(query)
+      .filters(filters)
+      .populate("reviews");
     let car = await searchQuery.model;
 
     const totalCount = car.length;
@@ -24,7 +27,13 @@ export const createCar = catchAsyncErrors(async (carInput: CarInput) => {
 });
 
 export const getCarById = catchAsyncErrors(async (carId: string) => {
-  const car = await Car.findById(carId);
+  const car = await Car.findById(carId).populate({
+    path: "reviews",
+    populate: {
+      path: "user",
+      model: "User",
+    },
+  });
   if (!car) throw new NotFoundError("Car not found");
   return car;
 });

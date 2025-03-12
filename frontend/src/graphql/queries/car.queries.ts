@@ -54,6 +54,18 @@ export const GET_CAR_BY_ID = gql`
         url
         public_id
       }
+      reviews {
+        user {
+          id
+          name
+          avatar {
+            url
+          }
+        }
+        rating
+        comment
+        updatedAt
+      }
       ratings {
         value
         count

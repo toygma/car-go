@@ -16,6 +16,12 @@ const carSchema = new mongoose.Schema<ICar>(
       type: String,
       required: [true, "Please enter car name"],
     },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
     description: {
       type: String,
       required: [true, "Please enter car description"],
@@ -97,18 +103,34 @@ const carSchema = new mongoose.Schema<ICar>(
       },
       required: [true, "Please enter car category"],
     },
-    reviews: [String],
   },
   { timestamps: true }
 );
 
 carSchema.virtual("ratings").get(function () {
-  return {
-    value: 5,
-    count: 10,
-  };
-});
+  let numOfReviews = this.reviews.length;
+  console.log(this.reviews);
+  if (numOfReviews === 0) {
+    return {
+      value: 5,
+      count: 0,
+    };
+  }
 
+  const ratingsSum = this.reviews.reduce((sum: number, review: any) => {
+    if (isNaN(review.rating)) {
+      console.error(
+        `Invalid rating value in review with id ${review._id}: ${review.rating}`
+      );
+      return sum;
+    }
+    return sum + review.rating;
+  }, 0);
+
+  const value = numOfReviews > 0 ? ratingsSum / numOfReviews : 0;
+
+  return { value, count: numOfReviews };
+});
 const Car = mongoose.model<ICar>("Car", carSchema);
 
 export default Car;

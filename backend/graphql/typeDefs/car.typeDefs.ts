@@ -26,6 +26,7 @@ export const carTypeDefs = gql`
     seats: Int
     doors: Int
     images: [CarImages]
+    reviews: [Review]
     category: String
     ratings: CarRatings
     createdAt: String

@@ -1,5 +1,6 @@
 import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
+import { IReview } from "shared/src/interfaces";
 
 export const updateSearchParams = (
   searchParams: URLSearchParams,
@@ -97,4 +98,8 @@ export const calculateTablePaginationEnd = (
 ) => {
   const end = Math.min(currentPage * resPerPage, totalCount);
   return end;
+};
+
+export const findReviewByUserId = (reviews: IReview[], userId: string) => {
+  return reviews.find((review) => review?.user?.id === userId);
 };

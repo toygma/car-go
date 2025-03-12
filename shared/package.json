@@ -1,0 +1,17 @@
+{
+  "name": "shared",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "concurrently \"rimraf dist\" \"tsc -b\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "types": "dist/index.d.ts",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "rimraf": "^6.0.1"
+  }
+}

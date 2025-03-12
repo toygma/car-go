@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",  // Modül çözümleme yöntemi olarak Node.js tarzını kullanır.
+    "module": "CommonJS",        // Çıktı modül sistemini CommonJS olarak ayarlar (Node.js için uygundur).
+    "target": "es6",             // Derleme hedefini ECMAScript 6 (ES6) olarak belirler.
+    "sourceMap": true,           // Derlenmiş JavaScript dosyalarıyla TypeScript kaynak kodlarını eşleştirmek için kaynak haritaları oluşturur.
+    "declaration": true,         // Derleme sırasında `.d.ts` (type declaration) dosyaları oluşturur.
+    "declarationMap": true,      // `.d.ts.map` dosyaları oluşturarak deklarasyon dosyalarının kaynak kodlarıyla eşleştirilmesini sağlar.
+    "lib": ["ES2021"],           // ES2021 standardındaki yerleşik nesneleri ve özellikleri içeren bir çalışma zamanı kitaplığı kullanır.
+    "outDir": "dist",            // Derlenen JavaScript dosyalarının çıkış dizinini `dist` olarak belirler.
+    "rootDir": "./src"           // TypeScript kaynak dosyalarının bulunduğu kök dizini `src` olarak ayarlar.
+  },
+  "include": ["src/**/*"]         // `src` dizini içindeki tüm dosya ve klasörleri derleme kapsamına alır.
+}

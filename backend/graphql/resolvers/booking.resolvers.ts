@@ -3,6 +3,7 @@ import {
   createBooking,
   getBookingById,
   getCarBookedDates,
+  getDashboardStats,
   myBookings,
   updateBooking,
 } from "../../controllers/booking.controller";
@@ -24,6 +25,12 @@ export const bookingResolvers = {
     ) => {
       const filters = { user: user.id };
       return myBookings(page, filters, query);
+    },
+    getDashboardStats: async (
+      _: any,
+      { startDate, endDate }: { startDate: Date; endDate: Date }
+    ) => {
+      return getDashboardStats(startDate, endDate);
     },
   },
   Mutation: {

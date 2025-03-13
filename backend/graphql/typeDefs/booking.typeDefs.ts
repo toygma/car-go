@@ -51,6 +51,20 @@ export const bookingTypeDefs = gql`
     paymentInfo: PaymentInfoInput
   }
 
+  type SalesData {
+    date: String
+    totalSales: Float
+    numOfBookings: Int
+  }
+
+  type DashboardStats {
+    totalSales: Float
+    totalBookings: Int
+    totalPendingCash: Float
+    totalPaidCash: Float
+    salesData: [SalesData]
+  }
+
   type Mutation {
     createBooking(bookingInput: BookingInput!): Booking!
     updateBooking(
@@ -62,6 +76,7 @@ export const bookingTypeDefs = gql`
     getBookingById(bookingId: String!): Booking!
     getCarBookedDates(carId: String!): [String]!
     myBookings(page: Int, query: String): CurrentUserBookings
+    getDashboardStats(startDate: String, endDate: String): DashboardStats
   }
 
   input BookingAmountInput {

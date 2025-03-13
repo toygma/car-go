@@ -5,6 +5,21 @@ import { BookingInput } from "../types/booking.types";
 import { NotFoundError } from "../utils/errorHandler";
 import APIFilters from "../utils/apiFilters";
 
+interface SalesData {
+  date: string;
+  sales: number;
+  bookings: number;
+}
+
+interface SalesStats {
+  salesData: SalesData[];
+  totalSales: number;
+  totalBookings: number;
+  totalPendingCash: number;
+  totalPaidCash: number;
+}
+
+
 export const createBooking = catchAsyncErrors(
   async (bookingInput: BookingInput, userId: string) => {
     const newBooking = await Booking.create({
@@ -66,7 +81,7 @@ export const getCarBookedDates = catchAsyncErrors(async (carId: string) => {
   const bookedDates = bookings.flatMap((booking) => {
     const startDate = new Date(booking.startDate);
     const endDate = new Date(booking.endDate);
-    const dates = [];
+    const dates: Date[] = [];
 
     for (
       let date = new Date(startDate);
@@ -118,6 +133,135 @@ export const myBookings = catchAsyncErrors(
         totalCount,
         resPerPage,
       },
+    };
+  }
+);
+
+//sales data give
+
+const getSalesData = async (startDate: Date, endDate: Date): Promise<SalesStats>  => {
+  const salesData = await Booking.aggregate([
+    {
+      $match: {
+        createdAt: { $gte: startDate, $lte: endDate },
+      },
+    },
+    {
+      $facet: {
+        salesData: [
+          {
+            $group: {
+              _id: {
+                date: {
+                  $dateToString: {
+                    format: "%Y-%m-%d",
+                    date: "$createdAt",
+                  },
+                },
+              },
+              totalSales: { $sum: "$amount.total" },
+              numOfBookings: { $sum: 1 },
+            },
+          },
+          { $sort: { "_id.date": 1 } },
+        ],
+        pendingCashData: [
+          {
+            $match: { "paymentInfo.status": "pending" },
+          },
+          {
+            $group: {
+              _id: null,
+              totalPendingCash: { $sum: "$amount.total" },
+            },
+          },
+        ],
+        paidCashData: [
+          {
+            $match: {
+              "paymentInfo.status": "paid",
+              "paymentInfo.method": "cash",
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              totalPaidCash: { $sum: "$amount.total" },
+            },
+          },
+        ],
+      },
+    },
+  ]);
+
+  if (!salesData.length) {
+    return { salesData: [], totalSales: 0, totalBookings: 0, totalPendingCash: 0, totalPaidCash: 0 };
+  }
+  const {
+    salesData: salesDataResult = [],
+    pendingCashData: pendingCashDataResult = [],
+    paidCashData: paidCashDataResult = [],
+  } = salesData[0];
+
+  const salesMap = new Map<string, { sales: number; bookings: number }>();
+  let totalSales = 0;
+  let totalBookings = 0;
+
+  salesDataResult.forEach((data: any) => {
+    const date = data?._id?.date;
+    const sales = data?.totalSales || 0;
+    const bookings = data?.numOfBookings || 0;
+
+    salesMap.set(date, { sales, bookings });
+    totalSales += sales;
+    totalBookings += bookings;
+  });
+
+  let currentDate = new Date(startDate);
+  const finalSalesData: SalesData[] = [];
+  // Tarih aralığını oluştur ve eksik günleri 0 ile doldur
+  while (currentDate <= endDate) {
+    const date = currentDate.toISOString().split("T")[0];
+    finalSalesData.push({
+      date,
+      sales: salesMap.get(date)?.sales || 0,
+      bookings: salesMap.get(date)?.bookings || 0,
+    });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return {
+    salesData: finalSalesData,
+    totalSales,
+    totalBookings,
+    totalPendingCash: pendingCashDataResult[0]?.totalPendingCash || 0 ,
+    totalPaidCash: paidCashDataResult[0]?.totalPaidCash || 0,
+  };
+};
+
+export const getDashboardStats = catchAsyncErrors(
+  async (startDate: Date, endDate: Date) => {
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+
+    startDate.setUTCHours(0, 0, 0, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    const {
+      salesData,
+      totalSales,
+      totalBookings,
+      totalPendingCash,
+      totalPaidCash,
+    } = await getSalesData(startDate, endDate);
+
+    return {
+      salesData,
+      totalSales,
+      totalBookings,
+      totalPendingCash,
+      totalPaidCash,
     };
   }
 );

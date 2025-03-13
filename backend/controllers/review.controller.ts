@@ -6,8 +6,6 @@ export const createUpdateReview = async (
   reviewInput: ReviewInput,
   userId: string
 ) => {
-  console.log("🚀 ~ reviewInput:", reviewInput)
-  console.log("🚀 ~ userId:", userId)
   try {
     const isReview = await Review.findOne({
       user: userId,
@@ -27,7 +25,6 @@ export const createUpdateReview = async (
       });
       return review;
     }
-
   } catch (error: any) {
     console.log(error.message);
   }

@@ -3,7 +3,7 @@ export type CarInput = {
   description: string;
   rentPerDay: number;
   address: string;
-  images: { url: string; public_id: string }[];
+  images: string[];
   brand: string;
   year: number;
   transmission: string;

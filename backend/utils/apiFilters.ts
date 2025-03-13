@@ -31,9 +31,7 @@ class APIFilters {
   filters(filters: any) {
     const filtersCopy = { ...filters };
 
-    console.log("🚀 ~ APIFilters ~ filters ~ filtersCopy:", filtersCopy);
     let filterStr = JSON.stringify(filtersCopy);
-    console.log("🚀 ~ APIFilters ~ filters ~ filterStr:", filterStr);
 
     filterStr = filterStr.replace(
       /\b(gt|gte|lt|lte)\b/g,

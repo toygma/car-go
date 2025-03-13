@@ -4,7 +4,7 @@ import NotFound from "@/components/custom/NotFound";
 import AdminLayout from "@/layouts/AdminLayout";
 import Dashboard from "@/pages/admin/Dashboard";
 import ListCars from "@/pages/admin/car/ListCars";
-import NewCars from "@/pages/admin/car/NewCars";
+import NewCars from "@/pages/admin/car/create/NewCars";
 
 export const AdminRoutes = {
   path: "/admin",

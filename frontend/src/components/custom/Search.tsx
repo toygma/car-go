@@ -27,9 +27,7 @@ const SearchMenu = () => {
     { value: "izmir", label: "İzmir" },
   ];
 
-  const onSubmit = (data: createSearchSchema) => {
-    console.log(data);
-  };
+  const onSubmit = (data: createSearchSchema) => {};
 
   return (
     <div className="bg-white shadow-xl rounded-md md:w-[500px] w-full absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2">

@@ -14,12 +14,17 @@ interface Props {
   label?: string;
   error?: any;
   className?: string;
-  setPreview:React.Dispatch<React.SetStateAction<null | string>>
+  setPreview: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const ImagesInput = ({ error, control, name, label, className ,setPreview}: Props) => {
-
-
+const ImagesInput = ({
+  error,
+  control,
+  name,
+  label,
+  className,
+  setPreview,
+}: Props) => {
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     fieldOnChange: any

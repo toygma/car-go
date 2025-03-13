@@ -2,6 +2,10 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import Car from "../models/car.model";
 import { CarInput, CarFilters } from "../types/car.types";
 import APIFilters from "../utils/apiFilters";
+import {
+  deleteCloudinary,
+  uploadMultipleCloudinary,
+} from "../utils/cloudinary";
 import { NotFoundError } from "../utils/errorHandler";
 
 export const getAllCars = catchAsyncErrors(
@@ -22,8 +26,30 @@ export const getAllCars = catchAsyncErrors(
 );
 
 export const createCar = catchAsyncErrors(async (carInput: CarInput) => {
-  const newCar = await Car.create(carInput);
-  return newCar;
+  let uploadedImageUrls: { url: String; public_id: string }[] = [];
+
+  try {
+    uploadedImageUrls = await uploadMultipleCloudinary(
+      carInput.images,
+      "gorental/cars"
+    );
+
+    const newCar = await Car.create({
+      ...carInput,
+      images: uploadedImageUrls,
+    });
+    return newCar;
+  } catch (error) {
+    if (uploadedImageUrls.length > 0) {
+      const deletePromises = uploadedImageUrls.map((url) => {
+        return deleteCloudinary(url.public_id);
+      });
+
+      await Promise.all(deletePromises);
+    }
+
+    throw error;
+  }
 });
 
 export const getCarById = catchAsyncErrors(async (carId: string) => {
@@ -34,6 +60,7 @@ export const getCarById = catchAsyncErrors(async (carId: string) => {
       model: "User",
     },
   });
+  console.log("🚀 ~ car ~ car:", car);
   if (!car) throw new NotFoundError("Car not found");
   return car;
 });

@@ -20,7 +20,7 @@ interface Props {
   control: any;
   name: string;
   label?: string;
-  options: { value: string; label: string | number }[];
+  options: { value: any; label: string | number }[];
   error?: any;
   className?: string | null;
 }

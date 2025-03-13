@@ -90,7 +90,7 @@ const ListCars = () => {
     <div className="relative">
       <Link
         to={"/admin/cars/new"}
-        className="absolute md:top-24 top-32 right-12"
+        className="absolute md:top-20 top-32 right-12"
       >
         <Button size={"sm"} className="h-8 gap-1">
           <PlusCircle className="w-3.5 h-3.5" />

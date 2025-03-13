@@ -88,10 +88,6 @@ const PlacesAutoComplete = ({
                     key={result.place_id}
                     value={result.display_name}
                     onSelect={(currentValue: any) => {
-                      console.log(
-                        "🚀 ~ PlacesAutoComplete ~ currentValue:",
-                        currentValue
-                      );
                       setOpen(false);
                       setLocationValue(currentValue);
                       if (setPosition) {

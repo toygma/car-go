@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -39,9 +39,10 @@ import {
   carTransmission,
 } from "./partials/object-data";
 import { toastNotification } from "@/helpers/helpers";
+import { Input } from "@/components/ui/input";
 const NewCars = () => {
   const navigate = useNavigate();
-
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [images, setImages] = useState<string[]>([]);
 
   const form = useForm<createOrUpdateCarSchema>({
@@ -61,16 +62,41 @@ const NewCars = () => {
 
   useEffect(() => {
     if (error) {
-      console.log(error.message);
+      toastNotification(error.message);
     }
   }, [error]);
-  console.log(form.formState.errors);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files && Array.from(e.target.files);
+
+    files?.forEach((file: File) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImages((prevArr: any) => [...prevArr, reader.result]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleImagePreviewDelete = (image: string) => {
+    const filtered = images.filter((item) => item !== image);
+    setImages(filtered);
+  };
+
+  const handleResetFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const onSubmit = async (data: createOrUpdateCarSchema) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     const carInput = {
       ...data,
-      doors: parseInt(data.doors),
-      seats: parseInt(data.seats),
+      doors: Number(data.doors),
+      seats: Number(data.seats),
       images,
     };
 
@@ -307,24 +333,44 @@ const NewCars = () => {
                       <CardContent>
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 gap-2">
-                            {/* {images.map((image, index) => (
-                          <div className="relative border" key={index}>
-                            <img
-                              alt="Car Images"
-                              className="aspect-square w-full rounded-md object-cover"
-                              height="84"
-                              src={image}
-                              width="84"
-                            />
-                            <span className="absolute top-0 right-0 p-1 bg-rose-700">
-                              <X color="white" className="h-4 w-4" />
-                            </span>
-                          </div>
-                        ))} */}
-                            <div className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                            {images.map((image, index) => (
+                              <div className="relative border" key={index}>
+                                <img
+                                  alt="Car Images"
+                                  className="aspect-square w-full rounded-md object-cover"
+                                  height="84"
+                                  src={image}
+                                  width="84"
+                                />
+                                <span
+                                  onClick={() =>
+                                    handleImagePreviewDelete(image)
+                                  }
+                                  className="absolute top-0 right-0 p-1 bg-rose-700"
+                                >
+                                  <X
+                                    color="white"
+                                    className="h-4 w-4 cursor-pointer"
+                                  />
+                                </span>
+                              </div>
+                            ))}
+                            <div
+                              onClick={() => fileInputRef.current?.click()}
+                              className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed cursor-pointer"
+                            >
                               <Upload className="h-4 w-4 text-muted-foreground" />
                               <span className="sr-only">Upload</span>
                             </div>
+                            <Input
+                              name="image"
+                              multiple
+                              type="file"
+                              ref={fileInputRef}
+                              onChange={handleFileChange}
+                              onClick={handleResetFileInput}
+                              className="hidden"
+                            />
                           </div>
                         </div>
                       </CardContent>

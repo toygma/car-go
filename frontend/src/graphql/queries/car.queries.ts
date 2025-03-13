@@ -31,41 +31,45 @@ export const GET_ALL_QUERIES = gql`
 `;
 
 export const GET_CAR_BY_ID = gql`
-  query Query($carId: ID!, $getCarBookedDatesCarId2: String!) {
+  query GetCarById($carId: ID, $getCarBookedDatesCarId2: String!) {
     getCarById(carId: $carId) {
       id
       name
       description
-      updatedAt
-      createdAt
       status
       rentPerDay
       address
       year
       power
-      category
-      doors
-      seats
-      fuelType
-      transmission
-      brand
       milleage
+      brand
+      transmission
+      fuelType
+      seats
+      doors
       images {
         url
         public_id
       }
       reviews {
+        id
         user {
           id
           name
           avatar {
             url
+            public_id
           }
         }
+
         rating
         comment
+        createdAt
         updatedAt
       }
+      category
+      createdAt
+      updatedAt
       ratings {
         value
         count

@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import AdminRangePicker from "./partials/AdminRangePicker";
+import { DashboardSalesChart } from "./DashboardSalesChart";
 
 const Dashboard = () => {
   const [dates, setDates] = useState<DateRange | undefined>({
@@ -144,7 +145,7 @@ const Dashboard = () => {
 
         <DropdownMenuSeparator />
 
-        {/* Dashboard Chart */}
+        <DashboardSalesChart data={stats?.sales} dates={dates} />
       </main>
     </div>
   );

@@ -53,8 +53,8 @@ export const bookingTypeDefs = gql`
 
   type SalesData {
     date: String
-    totalSales: Float
-    numOfBookings: Int
+    sales: Float
+    bookings: Int
   }
 
   type DashboardStats {
@@ -62,7 +62,7 @@ export const bookingTypeDefs = gql`
     totalBookings: Int
     totalPendingCash: Float
     totalPaidCash: Float
-    salesData: [SalesData]
+    sales: [SalesData]
   }
 
   type Mutation {

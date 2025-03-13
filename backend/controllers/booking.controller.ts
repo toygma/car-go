@@ -19,7 +19,6 @@ interface SalesStats {
   totalPaidCash: number;
 }
 
-
 export const createBooking = catchAsyncErrors(
   async (bookingInput: BookingInput, userId: string) => {
     const newBooking = await Booking.create({
@@ -139,11 +138,14 @@ export const myBookings = catchAsyncErrors(
 
 //sales data give
 
-const getSalesData = async (startDate: Date, endDate: Date): Promise<SalesStats>  => {
+const getSalesData = async (
+  startDate: Date,
+  endDate: Date
+): Promise<SalesStats> => {
   const salesData = await Booking.aggregate([
     {
       $match: {
-        createdAt: { $gte: startDate, $lte: endDate },
+        createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
       },
     },
     {
@@ -195,7 +197,13 @@ const getSalesData = async (startDate: Date, endDate: Date): Promise<SalesStats>
   ]);
 
   if (!salesData.length) {
-    return { salesData: [], totalSales: 0, totalBookings: 0, totalPendingCash: 0, totalPaidCash: 0 };
+    return {
+      salesData: [],
+      totalSales: 0,
+      totalBookings: 0,
+      totalPendingCash: 0,
+      totalPaidCash: 0,
+    };
   }
   const {
     salesData: salesDataResult = [],
@@ -235,7 +243,7 @@ const getSalesData = async (startDate: Date, endDate: Date): Promise<SalesStats>
     salesData: finalSalesData,
     totalSales,
     totalBookings,
-    totalPendingCash: pendingCashDataResult[0]?.totalPendingCash || 0 ,
+    totalPendingCash: pendingCashDataResult[0]?.totalPendingCash || 0,
     totalPaidCash: paidCashDataResult[0]?.totalPaidCash || 0,
   };
 };
@@ -257,7 +265,7 @@ export const getDashboardStats = catchAsyncErrors(
     } = await getSalesData(startDate, endDate);
 
     return {
-      salesData,
+      sales: salesData,
       totalSales,
       totalBookings,
       totalPendingCash,

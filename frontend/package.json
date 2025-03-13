@@ -43,6 +43,7 @@
     "react-paginate": "^8.3.0",
     "react-router-dom": "^7.1.5",
     "react-star-ratings": "^2.3.0",
+    "recharts": "^2.15.1",
     "shared": "file:../shared",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",

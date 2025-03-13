@@ -19,8 +19,8 @@ import { cn } from "@/lib/utils";
 interface Props {
   control: any;
   name: string;
-  label: string;
-  options: { value: string; label: string }[];
+  label?: string;
+  options: { value: string; label: string | number }[];
   error?: any;
   className?: string | null;
 }
@@ -41,7 +41,7 @@ const SelectInput = ({
           <FormItem className="w-full">
             <FormLabel>{label}</FormLabel>
             <FormControl>
-              <Select onValueChange={field.onChange}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger
                   className={cn(
                     "border-2 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full",

@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -24,19 +24,60 @@ import {
 } from "@/components/ui/form";
 import EditInput from "@/components/input/EditInput";
 import LocationSearch from "@/components/input/LocationSearch";
+import SelectInput from "@/components/input/SelectInput";
 
+import { useMutation } from "@apollo/client";
+import { NEW_CAR_MUTATION } from "@/graphql/mutations/car.mutation";
+import { toast } from "@/hooks/use-toast";
+import {
+  carBrand,
+  carCategory,
+  carDoors,
+  carFuelTypes,
+  carSeats,
+  carStatus,
+  carTransmission,
+} from "./partials/object-data";
+import { toastNotification } from "@/helpers/helpers";
 const NewCars = () => {
   const navigate = useNavigate();
 
-  const [image, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>([]);
 
   const form = useForm<createOrUpdateCarSchema>({
     resolver: zodResolver(newUpdateCarSchema),
     mode: "onChange",
   });
 
-  const onSubmit = async (data: createOrUpdateCarSchema) => {};
+  const [createCar, { loading, error }] = useMutation(NEW_CAR_MUTATION, {
+    onCompleted: () => {
+      toast({
+        title: "Successfully",
+        variant: "success",
+      });
+      navigate("/admin/cars");
+    },
+  });
 
+  useEffect(() => {
+    if (error) {
+      console.log(error.message);
+    }
+  }, [error]);
+  console.log(form.formState.errors);
+  const onSubmit = async (data: createOrUpdateCarSchema) => {
+    console.log("🚀 ~ onSubmit ~ data:", data);
+    const carInput = {
+      ...data,
+      doors: parseInt(data.doors),
+      seats: parseInt(data.seats),
+      images,
+    };
+
+    await createCar({
+      variables: { carInput },
+    });
+  };
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 my-5">
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -55,7 +96,14 @@ const NewCars = () => {
                     Add a New Car
                   </h1>
                   <div className="items-center gap-2 ml-auto">
-                    <Button className="w-[120px]">Create Car</Button>
+                    <Button
+                      type="submit"
+                      loading={loading}
+                      disabled={loading}
+                      className="w-[120px]"
+                    >
+                      Create Car
+                    </Button>
                   </div>
                 </div>
 
@@ -134,31 +182,55 @@ const NewCars = () => {
                           <div className="grid grid-cols-2 gap-4">
                             <div>
                               <h2>Brand</h2>
-                              <p>Toyota</p>
+                              <SelectInput
+                                control={form.control}
+                                name="brand"
+                                options={carBrand}
+                              />
                             </div>
                             <div>
                               <h2>Transmission</h2>
-                              <p>Automatic</p>
+                              <SelectInput
+                                control={form.control}
+                                name="transmission"
+                                options={carTransmission}
+                              />
                             </div>
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                             <div>
                               <h2>Seats</h2>
-                              <p>4</p>
+                              <SelectInput
+                                control={form.control}
+                                name="seats"
+                                options={carSeats}
+                              />
                             </div>
                             <div>
                               <h2>Doors</h2>
-                              <p>4</p>
+                              <SelectInput
+                                control={form.control}
+                                name="doors"
+                                options={carDoors}
+                              />
                             </div>
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                             <div>
                               <h2>Fuel Type</h2>
-                              <p>Petrol</p>
+                              <SelectInput
+                                control={form.control}
+                                name="fuelType"
+                                options={carFuelTypes}
+                              />
                             </div>
                             <div>
                               <h2>Category</h2>
-                              <p>SUV</p>
+                              <SelectInput
+                                control={form.control}
+                                name="category"
+                                options={carCategory}
+                              />
                             </div>
                           </div>
                         </div>
@@ -173,17 +245,32 @@ const NewCars = () => {
                           <div className="grid grid-cols-2 gap-4">
                             <div>
                               <h2>Milleage</h2>
-                              <p>3000</p>
+                              <EditInput
+                                control={form.control}
+                                name="milleage"
+                                placeholder="Milleage"
+                                error={form.formState.errors.milleage}
+                              />
                             </div>
                             <div>
                               <h2>Power (CC)</h2>
-                              <p>1800</p>
+                              <EditInput
+                                control={form.control}
+                                name="power"
+                                placeholder="Power"
+                                error={form.formState.errors.power}
+                              />
                             </div>
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                             <div>
                               <h2>Year</h2>
-                              <p>2015</p>
+                              <EditInput
+                                control={form.control}
+                                name="year"
+                                placeholder="Year"
+                                error={form.formState.errors.year}
+                              />
                             </div>
                           </div>
                         </div>
@@ -200,7 +287,11 @@ const NewCars = () => {
                           <div className="grid gap-3">
                             <div>
                               <h2>Status</h2>
-                              <p>Available</p>
+                              <SelectInput
+                                control={form.control}
+                                name="status"
+                                options={carStatus}
+                              />
                             </div>
                           </div>
                         </div>

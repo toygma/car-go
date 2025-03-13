@@ -3,7 +3,7 @@ import { Form } from "@/components/ui/form";
 import {
   createDetailSchema,
   detailMenuSchema,
-} from "@/validation/details/detailMenuSchema";
+} from "@/validation/details/detail.menu.schema";
 import {
   Card,
   CardContent,

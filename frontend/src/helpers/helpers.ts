@@ -64,6 +64,7 @@ export const adjustDateLocalTimeZone = (date: Date | undefined) => {
 
   return localDate;
 };
+
 export const formatDate = (date: Date | string) => {
   if (typeof date === "string") {
     date = new Date(parseInt(date));

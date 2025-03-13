@@ -13,7 +13,7 @@ import { Form } from "@/components/ui/form";
 import {
   createUpdatePasswordSchema,
   updatePasswordSchema,
-} from "@/validation/profile/updateProfileSchema";
+} from "@/validation/profile/profile.menu.schema";
 import { useMutation } from "@apollo/client";
 import { toast } from "@/hooks/use-toast";
 import { UPDATE_PASSWORD_MUTATION } from "@/graphql/mutations/user.mutations";
@@ -43,7 +43,7 @@ const UpdatePassword = () => {
         newPassword: data.newPassword,
       };
       await updatePassword({
-        variables:  passwords ,
+        variables: passwords,
       });
     } catch (error: any) {
       toast({

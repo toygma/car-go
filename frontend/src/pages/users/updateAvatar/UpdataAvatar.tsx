@@ -12,7 +12,7 @@ import { Form } from "@/components/ui/form";
 import {
   createUpdateAvatarSchema,
   UpdateAvatarSchema,
-} from "@/validation/profile/updateProfileSchema";
+} from "@/validation/profile/profile.menu.schema";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { toast } from "@/hooks/use-toast";
 import { UPDATE_AVATAR_MUTATION } from "@/graphql/mutations/user.mutations";

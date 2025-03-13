@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import AdminRangePicker from "./partials/AdminRangePicker";
-import { DashboardSalesChart } from "./DashboardSalesChart";
+import { DashboardSalesChart } from "./partials/DashboardSalesChart";
 
 const Dashboard = () => {
   const [dates, setDates] = useState<DateRange | undefined>({

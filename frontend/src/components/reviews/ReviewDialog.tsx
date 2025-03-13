@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   reviewCreateSchema,
   reviewSchema,
-} from "@/validation/review/reviewValidation";
+} from "@/validation/review/review.menu.schema";
 import { CREATE_UPDATE_REVIEW_MUTATION } from "@/graphql/mutations/review.mutation";
 import { useMutation } from "@apollo/client";
 import { toast } from "@/hooks/use-toast";

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   createFilteredSchema,
   filteredMenuSchema,
-} from "@/validation/searchMenu/searchMenuSchema";
+} from "@/validation/searchMenu/search.menu.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 

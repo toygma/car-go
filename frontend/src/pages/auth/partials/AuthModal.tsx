@@ -13,7 +13,7 @@ import {
   createLoginData,
   forgotFormSchema,
   loginFormSchema,
-} from "@/validation/auth/authValidation";
+} from "@/validation/auth/auth.menu.schema";
 import { Form } from "@/components/ui/form";
 import { useMutation } from "@apollo/client";
 import {

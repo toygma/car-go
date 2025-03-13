@@ -13,7 +13,7 @@ import { Form } from "@/components/ui/form";
 import {
   createUpdateProfileSchema,
   updateProfileSchema,
-} from "@/validation/profile/updateProfileSchema";
+} from "@/validation/profile/profile.menu.schema";
 import { useEffect } from "react";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { toast } from "@/hooks/use-toast";

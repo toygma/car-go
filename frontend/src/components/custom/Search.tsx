@@ -3,7 +3,7 @@ import SelectInput from "../input/SelectInput";
 import {
   createSearchSchema,
   searchMenuSchema,
-} from "@/validation/searchMenu/searchMenuSchema";
+} from "@/validation/searchMenu/search.menu.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "../ui/button";

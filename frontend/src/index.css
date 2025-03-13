@@ -146,4 +146,8 @@ body {
       0 0
     ) !important;
   }
+  .leaflet-container {
+    z-index: 1;
+    top: 20px;
+  }
 }

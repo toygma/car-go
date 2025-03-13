@@ -23,6 +23,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import EditInput from "@/components/input/EditInput";
+import LocationSearch from "@/components/input/LocationSearch";
 
 const NewCars = () => {
   const navigate = useNavigate();
@@ -110,7 +111,7 @@ const NewCars = () => {
                                         onLocationChanged={(value) =>
                                           form.setValue("address", value)
                                         }
-                                        {...field}
+                                        value={field.value}
                                       />
                                     </FormControl>
                                   </FormLabel>

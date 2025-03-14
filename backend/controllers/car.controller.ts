@@ -66,34 +66,19 @@ export const getCarById = catchAsyncErrors(async (carId: string) => {
 
 export const updateCar = catchAsyncErrors(
   async (carId: string, carInput: CarInput) => {
-    const car = await Car.findByIdAndUpdate(carId, carInput, {
-      new: true,
-      runValidators: true,
-    });
-    if (!car) {
-      throw new NotFoundError("Car not found");
-    }
-    let uploadedImageUrls: { url: String; public_id: string }[] = [];
+    const car = await Car.findById(carId);
 
-    try {
+    if (!car) {
+      throw new Error("Car not found");
+    }
+
+    let uploadedImageUrls: { url: string; public_id: string }[] = [];
+
+    if (carInput?.images?.length > 0) {
       uploadedImageUrls = await uploadMultipleCloudinary(
         carInput.images,
         "gorental/cars"
       );
-
-      const newCar = await Car.create({
-        ...carInput,
-        images: uploadedImageUrls,
-      });
-      return newCar;
-    } catch (error) {
-      if (uploadedImageUrls.length > 0) {
-        const deletePromises = uploadedImageUrls.map((url) => {
-          return deleteCloudinary(url.public_id);
-        });
-
-        await Promise.all(deletePromises);
-      }
     }
 
     await car
@@ -107,6 +92,32 @@ export const updateCar = catchAsyncErrors(
       .save();
 
     return true;
+  }
+);
+
+export const deleteCarImage = catchAsyncErrors(
+  async (carId: string, imageId: string) => {
+    const car = await Car.findById(carId);
+
+    if (!car) {
+      throw new NotFoundError("Car not found");
+    }
+
+    const isDeleted = await deleteCloudinary(imageId);
+
+    if (isDeleted) {
+      await Car.findByIdAndUpdate(carId, {
+        $pull: {
+          images: {
+            public_id: imageId,
+          },
+        },
+      });
+
+      return true;
+    } else {
+      throw new Error("Image not deleted");
+    }
   }
 );
 

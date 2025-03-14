@@ -7,6 +7,7 @@ import {
   CarStatus,
   CarTransmissions,
 } from "shared/src/interfaces";
+
 export const carBrand = Object.values(CarBrand).map((value) => ({
   value,
   label: value,

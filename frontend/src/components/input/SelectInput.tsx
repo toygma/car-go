@@ -23,6 +23,7 @@ interface Props {
   options: { value: any; label: string | number }[];
   error?: any;
   className?: string | null;
+  updateValue?: string | null;
 }
 const SelectInput = ({
   control,
@@ -31,6 +32,7 @@ const SelectInput = ({
   options,
   error,
   className,
+  updateValue,
 }: Props) => {
   return (
     <FormField
@@ -41,14 +43,21 @@ const SelectInput = ({
           <FormItem className="w-full">
             <FormLabel>{label}</FormLabel>
             <FormControl>
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                value={updateValue ? updateValue : field.value}
+              >
                 <SelectTrigger
                   className={cn(
                     "border-2 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 w-full",
                     className
                   )}
                 >
-                  <SelectValue placeholder={field.value || "Select"} />
+                  <SelectValue
+                    placeholder={
+                      updateValue ? updateValue : field.value || "Select"
+                    }
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   {options.map((option) => (

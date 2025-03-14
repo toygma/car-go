@@ -91,5 +91,6 @@ export const carTypeDefs = gql`
     createCar(carInput: CarInput): Car
     updateCar(carId: ID, carInput: CarInput): Boolean
     deleteCar(carId: ID): Boolean
+    deleteCarImage(carId: ID!, imageId: String!): Boolean
   }
 `;

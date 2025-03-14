@@ -1,6 +1,7 @@
 import {
   createCar,
   deleteCar,
+  deleteCarImage,
   getAllCars,
   getCarById,
   updateCar,
@@ -32,6 +33,9 @@ export const carResolvers = {
     },
     deleteCar: async (_: any, { carId }: { carId: string }) => {
       return await deleteCar(carId);
+    },
+    deleteCarImage: async (_: any, { carId,imageId }: { carId: string,imageId:string }) => {
+      return await deleteCarImage(carId,imageId);
     },
   },
 };

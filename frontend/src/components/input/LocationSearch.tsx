@@ -28,12 +28,14 @@ interface PlacesAutoCompleteProps {
   setPosition?: (position: [number, number]) => void;
   onLocationChanged: (currentValue: string) => void;
   value: string;
+  prevLocation?: string;
 }
 
 const PlacesAutoComplete = ({
   setPosition,
   onLocationChanged,
   value,
+  prevLocation,
 }: PlacesAutoCompleteProps) => {
   const [open, setOpen] = useState(false);
   const [locationValue, setLocationValue] = useState(value || "");
@@ -57,6 +59,12 @@ const PlacesAutoComplete = ({
       searchLocation(searchQuery);
     }
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (prevLocation) {
+      setLocationValue(prevLocation);
+    }
+  }, [prevLocation]);
 
   return (
     <div className="w-full">
@@ -119,6 +127,7 @@ const PlacesAutoComplete = ({
 const LocationSearch = ({
   onLocationChanged,
   value,
+  prevLocation,
 }: PlacesAutoCompleteProps) => {
   const [position, setPosition] = useState<[number, number]>([51.505, -0.09]);
 
@@ -128,6 +137,7 @@ const LocationSearch = ({
         setPosition={setPosition}
         onLocationChanged={onLocationChanged}
         value={value}
+        prevLocation={prevLocation}
       />
       <MapContainer
         center={position}

@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +27,10 @@ import LocationSearch from "@/components/input/LocationSearch";
 import SelectInput from "@/components/input/SelectInput";
 
 import { useMutation, useQuery } from "@apollo/client";
-import { UPDATE_CAR_MUTATION } from "@/graphql/mutations/car.mutation";
+import {
+  DELETE_CAR_IMAGE,
+  UPDATE_CAR_MUTATION,
+} from "@/graphql/mutations/car.mutation";
 import { toast } from "@/hooks/use-toast";
 import {
   carBrand,
@@ -42,31 +45,48 @@ import { toastNotification } from "@/helpers/helpers";
 import { Input } from "@/components/ui/input";
 import { GET_CAR_BY_ID } from "@/graphql/queries/car.queries";
 import Loading from "@/components/custom/Loading";
+import { Label } from "@/components/ui/label";
 
 const UpdateCar = () => {
-  const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [images, setImages] = useState<string[]>([]);
   const params = useParams();
 
-  const { data: carData, loading: getDataQuery } = useQuery(GET_CAR_BY_ID, {
+  const {
+    data: carData,
+    loading: getDataQuery,
+    refetch,
+  } = useQuery(GET_CAR_BY_ID, {
     variables: {
       carId: params?.id,
     },
   });
-  console.log("🚀 ~ UpdateCar ~ carData:", carData);
 
   const car = carData?.getCarById;
 
+  //UPDATE car
   const [updateCar, { loading, error }] = useMutation(UPDATE_CAR_MUTATION, {
     onCompleted: () => {
+      refetch();
       toast({
         title: "Successfully",
         variant: "success",
       });
-      navigate("/admin/cars");
     },
   });
+  //DELETE car
+  const [deleteCar, { loading: deleteCarLoading }] = useMutation(
+    DELETE_CAR_IMAGE,
+    {
+      onCompleted: () => {
+        refetch();
+        toast({
+          title: "Successfully",
+          variant: "success",
+        });
+      },
+    }
+  );
 
   const form = useForm<createOrUpdateCarSchema>({
     resolver: zodResolver(newUpdateCarSchema),
@@ -100,8 +120,14 @@ const UpdateCar = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files && Array.from(e.target.files);
-
+    const maxSize = 2 * 1024 * 1024;
     files?.forEach((file: File) => {
+      if (file.size > maxSize) {
+        return toast({
+          title: "Image cannot be larger than 2 mb",
+          variant: "destructive",
+        });
+      }
       const reader = new FileReader();
 
       reader.onload = () => {
@@ -116,6 +142,16 @@ const UpdateCar = () => {
   const handleImagePreviewDelete = (image: string) => {
     const filtered = images.filter((item) => item !== image);
     setImages(filtered);
+  };
+
+  const deleteCarImageHandler = async (id: string) => {
+    try {
+      await deleteCar({
+        variables: { carId: car?.id, imageId: id },
+      });
+    } catch (error) {
+      toastNotification(error);
+    }
   };
 
   const handleResetFileInput = () => {
@@ -221,6 +257,7 @@ const UpdateCar = () => {
                                         onLocationChanged={(value) =>
                                           form.setValue("address", value)
                                         }
+                                        prevLocation={car?.address}
                                         value={field.value}
                                       />
                                     </FormControl>
@@ -248,6 +285,7 @@ const UpdateCar = () => {
                                 control={form.control}
                                 name="brand"
                                 options={carBrand}
+                                updateValue={car.brand}
                               />
                             </div>
                             <div>
@@ -256,6 +294,7 @@ const UpdateCar = () => {
                                 control={form.control}
                                 name="transmission"
                                 options={carTransmission}
+                                updateValue={car.transmission}
                               />
                             </div>
                           </div>
@@ -266,6 +305,7 @@ const UpdateCar = () => {
                                 control={form.control}
                                 name="seats"
                                 options={carSeats}
+                                updateValue={car.seats}
                               />
                             </div>
                             <div>
@@ -274,6 +314,7 @@ const UpdateCar = () => {
                                 control={form.control}
                                 name="doors"
                                 options={carDoors}
+                                updateValue={car.doors}
                               />
                             </div>
                           </div>
@@ -284,6 +325,7 @@ const UpdateCar = () => {
                                 control={form.control}
                                 name="fuelType"
                                 options={carFuelTypes}
+                                updateValue={car.fuelType}
                               />
                             </div>
                             <div>
@@ -292,6 +334,7 @@ const UpdateCar = () => {
                                 control={form.control}
                                 name="category"
                                 options={carCategory}
+                                updateValue={car.category}
                               />
                             </div>
                           </div>
@@ -353,6 +396,7 @@ const UpdateCar = () => {
                                 control={form.control}
                                 name="status"
                                 options={carStatus}
+                                updateValue={car.status}
                               />
                             </div>
                           </div>
@@ -369,7 +413,7 @@ const UpdateCar = () => {
                       <CardContent>
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 gap-2">
-                            {images.map((image, index) => (
+                            {images.map((image: any, index) => (
                               <div className="relative border" key={index}>
                                 <img
                                   alt="Car Images"
@@ -409,6 +453,47 @@ const UpdateCar = () => {
                             />
                           </div>
                         </div>
+
+                        {car?.images?.length > 0 && (
+                          <div className="mt-2">
+                            <Label>Car Images</Label>
+                            <div className="grid grid-cols-3 gap-2">
+                              {car?.images?.map(
+                                (
+                                  image: { url: string; public_id: string },
+                                  index: string
+                                ) => (
+                                  <div className="relative border" key={index}>
+                                    <img
+                                      src={image.url}
+                                      alt="car images"
+                                      className="aspect-square w-full rounded-md object-cover"
+                                    />
+                                    <span
+                                      onClick={() =>
+                                        deleteCarLoading ? (
+                                          <>
+                                            <Loading size={10} />
+                                          </>
+                                        ) : (
+                                          deleteCarImageHandler(
+                                            image?.public_id
+                                          )
+                                        )
+                                      }
+                                      className="absolute top-0 right-0 p-1 bg-rose-700"
+                                    >
+                                      <X
+                                        color="white"
+                                        className="h-4 w-4 cursor-pointer"
+                                      />
+                                    </span>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
                   </div>

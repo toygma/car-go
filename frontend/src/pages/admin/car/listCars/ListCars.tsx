@@ -52,6 +52,7 @@ const ListCars = () => {
   });
 
   const cars = data?.getAllCars?.car;
+  console.log("🚀 ~ ListCars ~ cars:", cars);
   const pagination = data?.getAllCars?.pagination;
 
   useEffect(() => {

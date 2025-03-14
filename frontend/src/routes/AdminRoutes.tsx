@@ -1,13 +1,13 @@
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
+import { AdminProtectedRoute } from "./ProtectedRoute";
 import Loading from "@/components/custom/Loading";
 import NotFound from "@/components/custom/NotFound";
-import AdminLayout from "@/layouts/AdminLayout";
-import Dashboard from "@/pages/admin/car/dashboard/Dashboard";
-import ListCars from "@/pages/admin/car/listCars/ListCars";
-import NewCars from "@/pages/admin/car/create/NewCars";
-import UpdateCar from "@/pages/admin/car/updateCar/UpdateCar";
-import { AdminProtectedRoute } from "./ProtectedRoute";
 
+const Dashboard = lazy(() => import("@/pages/admin/car/dashboard/Dashboard"));
+const ListCars = lazy(() => import("@/pages/admin/car/listCars/ListCars"));
+const NewCars = lazy(() => import("@/pages/admin/car/create/NewCars"));
+const UpdateCar = lazy(() => import("@/pages/admin/car/updateCar/UpdateCar"));
+const AdminLayout = lazy(() => import("@/layouts/AdminLayout"));
 export const AdminRoutes = {
   path: "/admin",
   element: (

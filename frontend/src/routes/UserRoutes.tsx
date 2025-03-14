@@ -1,11 +1,11 @@
-import React, { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import Loading from "@/components/custom/Loading";
 import NotFound from "@/components/custom/NotFound";
-import UserLayout from "@/layouts/UserLayout";
-import MyBookings from "@/pages/bookings/MyBookings";
-import Invoice from "@/pages/invoice/Invoice";
 
-const Profile = React.lazy(() => import("@/pages/users/profile/Profile"));
+const Profile = lazy(() => import("@/pages/users/profile/Profile"));
+const MyBookings = lazy(() => import("@/pages/bookings/MyBookings"));
+const Invoice = lazy(() => import("@/pages/invoice/Invoice"));
+const UserLayout = lazy(() => import("@/layouts/UserLayout"));
 
 export const UserRoutes = {
   path: "/me",

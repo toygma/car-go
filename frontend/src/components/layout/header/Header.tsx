@@ -106,7 +106,9 @@ const Header = () => {
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                   </Link>
                   {currentUser?.role?.includes("admin") && (
-                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                    <Link to={"/admin/dashboard"}>
+                      <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                    </Link>
                   )}
                   <Link to={"/me/bookings"}>
                     <DropdownMenuItem>My bookings</DropdownMenuItem>

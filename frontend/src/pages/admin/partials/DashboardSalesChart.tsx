@@ -44,7 +44,7 @@ interface Props {
 }
 
 export function DashboardSalesChart({ data, dates }: Props) {
-  const sums = data.reduce((sum: number, acc: any) => sum + acc.sales, 0);
+  const sums = data?.reduce((sum: number, acc: any) => sum + acc?.sales, 0);
   return (
     <Card>
       <CardHeader>

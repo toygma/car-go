@@ -61,7 +61,6 @@ export const GET_CAR_BY_ID = gql`
             public_id
           }
         }
-
         rating
         comment
         createdAt

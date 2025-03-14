@@ -161,14 +161,13 @@ const ListCars = () => {
                     <TableCell className="font-medium">{car?.id}</TableCell>
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    <Link to={`/admin/cars/${car?.id}`}>
+                    <Link to={`/admin/cars/new/${car?.id}`}>
                       <Button
                         variant={"outline"}
-                        className="ms-2 w-24"
+                        className="ms-2 "
                         size={"icon"}
                       >
                         <Pencil />
-                        View
                       </Button>
                     </Link>
                     <Link to={`/admin/coupons/${car?.id}`}>

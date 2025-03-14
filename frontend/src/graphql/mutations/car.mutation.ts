@@ -7,3 +7,9 @@ export const NEW_CAR_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_CAR_MUTATION = gql`
+  mutation UpdateCar($carId: ID, $carInput: CarInput) {
+    updateCar(carId: $carId, carInput: $carInput)
+  }
+`;

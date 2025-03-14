@@ -1,8 +1,7 @@
 //utility yardımcı fonksiyon
 
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import {onError} from "@apollo/client/link/error"
-
+import { onError } from "@apollo/client/link/error";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -16,7 +15,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     console.error(`[Network Error]: ${networkError}`);
   }
 });
-
 
 const httpLink = new HttpLink({
   uri: import.meta.env.VITE_REACT_APP_BASE_URL,

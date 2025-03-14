@@ -60,7 +60,6 @@ export const getCarById = catchAsyncErrors(async (carId: string) => {
       model: "User",
     },
   });
-  console.log("🚀 ~ car ~ car:", car);
   if (!car) throw new NotFoundError("Car not found");
   return car;
 });
@@ -71,10 +70,41 @@ export const updateCar = catchAsyncErrors(
       new: true,
       runValidators: true,
     });
-
     if (!car) {
       throw new NotFoundError("Car not found");
     }
+    let uploadedImageUrls: { url: String; public_id: string }[] = [];
+
+    try {
+      uploadedImageUrls = await uploadMultipleCloudinary(
+        carInput.images,
+        "gorental/cars"
+      );
+
+      const newCar = await Car.create({
+        ...carInput,
+        images: uploadedImageUrls,
+      });
+      return newCar;
+    } catch (error) {
+      if (uploadedImageUrls.length > 0) {
+        const deletePromises = uploadedImageUrls.map((url) => {
+          return deleteCloudinary(url.public_id);
+        });
+
+        await Promise.all(deletePromises);
+      }
+    }
+
+    await car
+      .set({
+        ...carInput,
+        images:
+          uploadedImageUrls.length > 0
+            ? [...car.images, ...uploadedImageUrls]
+            : car.images,
+      })
+      .save();
 
     return true;
   }

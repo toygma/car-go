@@ -2,9 +2,11 @@ import { Suspense } from "react";
 import Loading from "@/components/custom/Loading";
 import NotFound from "@/components/custom/NotFound";
 import AdminLayout from "@/layouts/AdminLayout";
-import Dashboard from "@/pages/admin/Dashboard";
-import ListCars from "@/pages/admin/car/ListCars";
+import Dashboard from "@/pages/admin/car/dashboard/Dashboard";
+import ListCars from "@/pages/admin/car/listCars/ListCars";
 import NewCars from "@/pages/admin/car/create/NewCars";
+import UpdateCar from "@/pages/admin/car/updateCar/UpdateCar";
+import { AdminProtectedRoute } from "./ProtectedRoute";
 
 export const AdminRoutes = {
   path: "/admin",
@@ -16,7 +18,10 @@ export const AdminRoutes = {
         </div>
       }
     >
-      <AdminLayout />
+      <AdminProtectedRoute role={["admin"]}>
+        {" "}
+        <AdminLayout />
+      </AdminProtectedRoute>
     </Suspense>
   ),
   errorElement: <NotFound />,
@@ -42,6 +47,14 @@ export const AdminRoutes = {
       element: (
         <Suspense>
           <NewCars />
+        </Suspense>
+      ),
+    },
+    {
+      path: "cars/new/:id",
+      element: (
+        <Suspense>
+          <UpdateCar />
         </Suspense>
       ),
     },

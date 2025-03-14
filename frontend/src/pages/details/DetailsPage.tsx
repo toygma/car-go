@@ -14,9 +14,6 @@ import { Dot } from "lucide-react";
 const DetailsPage = () => {
   const params = useParams();
   const { data, loading, error, refetch } = useQuery(GET_CAR_BY_ID, {
-    onCompleted: () => {
-      refetch();
-    },
     variables: {
       carId: params?.id,
       getCarBookedDatesCarId2: params?.id,
@@ -28,12 +25,14 @@ const DetailsPage = () => {
   const handlerClickActive = (index: number) => {
     setActive(index);
   };
+
   const car: ICar = data?.getCarById;
   const disabledDates = data?.getCarBookedDates;
-
+  console.log(data);
   if (loading) {
     return <Loading />;
   }
+
   const {
     address,
     brand,
@@ -54,7 +53,6 @@ const DetailsPage = () => {
     year,
     id,
   } = car;
-  console.log("🚀 ~ DetailsPage ~ car:", car);
 
   if (error?.graphQLErrors[0]?.extensions?.code === "NOT_FOUND") {
     return <NotFound />;

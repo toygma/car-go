@@ -142,10 +142,10 @@ const Dashboard = () => {
             </CardContent>
           </Card>
         </div>
-
         <DropdownMenuSeparator />
-
-        <DashboardSalesChart data={stats?.sales} dates={dates} />
+        <div className="md:block hidden">
+          <DashboardSalesChart data={stats?.sales} dates={dates} />
+        </div>
       </main>
     </div>
   );

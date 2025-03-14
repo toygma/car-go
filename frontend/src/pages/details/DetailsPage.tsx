@@ -28,9 +28,7 @@ const DetailsPage = () => {
   };
 
   const car: ICar = data?.getCarById;
-  console.log("🚀 ~ DetailsPage ~ car:", car);
   const disabledDates = data?.getCarBookedDates;
-  console.log("🚀 ~ DetailsPage ~ data:", data);
 
   if (loading) {
     return <Loading />;

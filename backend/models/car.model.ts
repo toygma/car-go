@@ -109,7 +109,6 @@ const carSchema = new mongoose.Schema<ICar>(
 
 carSchema.virtual("ratings").get(function () {
   let numOfReviews = this.reviews.length;
-  console.log(this.reviews);
   if (numOfReviews === 0) {
     return {
       value: 5,

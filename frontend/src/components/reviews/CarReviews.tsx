@@ -12,7 +12,7 @@ import { userVar } from "@/apollo/apolloVars";
 
 interface Props {
   carId: string;
-  reviews: IReview[];
+  reviews: IReview[] | any;
   canReview: boolean;
   refetchCar: () => void;
 }

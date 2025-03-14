@@ -122,11 +122,19 @@ export const deleteCarImage = catchAsyncErrors(
 );
 
 export const deleteCar = catchAsyncErrors(async (carId: string) => {
-  const car = await Car.deleteOne({ _id: carId });
+  const car = await Car.findById(carId);
 
   if (!car) {
     throw new NotFoundError("Car not found");
   }
+
+  if (car?.images?.length > 0) {
+    car?.images.forEach(async (image) => {
+      await deleteCloudinary(image.public_id);
+    });
+  }
+
+  await car?.deleteOne();
 
   return true;
 });

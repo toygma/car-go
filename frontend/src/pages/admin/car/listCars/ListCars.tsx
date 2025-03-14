@@ -19,13 +19,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DELETE_CAR_MUTATION } from "@/graphql/mutations/car.mutation";
 import { GET_ALL_QUERIES } from "@/graphql/queries/car.queries";
 import {
   calculateTablePaginationEnd,
   calculateTablePaginationStart,
+  toastNotification,
 } from "@/helpers/helpers";
 import { toast } from "@/hooks/use-toast";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   CarFront,
   Pencil,
@@ -44,7 +46,7 @@ const ListCars = () => {
   const navigate = useNavigate();
   const query = searchParams.get("query");
   const page = parseInt(searchParams.get("page") || "1", 10);
-  const { error, data, loading } = useQuery(GET_ALL_QUERIES, {
+  const { error, data, loading, refetch } = useQuery(GET_ALL_QUERIES, {
     variables: {
       page,
       query,
@@ -52,8 +54,26 @@ const ListCars = () => {
   });
 
   const cars = data?.getAllCars?.car;
-  console.log("🚀 ~ ListCars ~ cars:", cars);
+
   const pagination = data?.getAllCars?.pagination;
+
+  useEffect(() => {
+    if (query) {
+      setSearchQuery(query);
+    }
+  }, [query]);
+
+  //DELETE car
+  const [deleteCar, { loading: deleteCarLoading, error: deleteError }] =
+    useMutation(DELETE_CAR_MUTATION, {
+      onCompleted: () => {
+        refetch();
+        toast({
+          title: "Successfully",
+          variant: "success",
+        });
+      },
+    });
 
   useEffect(() => {
     if (error) {
@@ -62,13 +82,23 @@ const ListCars = () => {
         description: `${error}`,
       });
     }
-  }, [error]);
-
-  useEffect(() => {
-    if (query) {
-      setSearchQuery(query);
+    if (deleteError) {
+      toast({
+        title: "Something went wrong",
+        description: `${deleteError}`,
+      });
     }
-  }, [query]);
+  }, [error, deleteError]);
+
+  const deleteCarHandler = async (id: string) => {
+    try {
+      await deleteCar({
+        variables: { carId: id },
+      });
+    } catch (error) {
+      toastNotification(error);
+    }
+  };
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -180,15 +210,17 @@ const ListCars = () => {
                         <Tags className="w-4 h-4" />
                       </Button>
                     </Link>
-                    <Link to={`/admin/coupons/${car?.id}`}>
+                    <span onClick={() => deleteCarHandler(car?.id)}>
                       <Button
                         variant={"destructive"}
                         className="ms-2"
                         size={"icon"}
+                        loading={deleteCarLoading}
+                        disabled={deleteCarLoading}
                       >
                         <Trash className="w-4 h-4" />
                       </Button>
-                    </Link>
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}

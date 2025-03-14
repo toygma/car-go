@@ -19,3 +19,9 @@ export const DELETE_CAR_IMAGE = gql`
     deleteCarImage(carId: $carId, imageId: $imageId)
   }
 `;
+
+export const DELETE_CAR_MUTATION = gql`
+  mutation DeleteCar($carId: ID) {
+    deleteCar(carId: $carId)
+  }
+`;

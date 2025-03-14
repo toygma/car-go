@@ -17,6 +17,7 @@ const DetailsPage = () => {
     variables: {
       carId: params?.id,
       getCarBookedDatesCarId2: params?.id,
+      canReviewCarId: params?.id,
     },
     fetchPolicy: "network-only",
   });
@@ -27,8 +28,10 @@ const DetailsPage = () => {
   };
 
   const car: ICar = data?.getCarById;
+  console.log("🚀 ~ DetailsPage ~ car:", car);
   const disabledDates = data?.getCarBookedDates;
-  console.log(data);
+  console.log("🚀 ~ DetailsPage ~ data:", data);
+
   if (loading) {
     return <Loading />;
   }
@@ -126,7 +129,6 @@ const DetailsPage = () => {
                 <InfoBox label="Milleage" value={milleage} />
                 <InfoBox label="Year" value={year} />
               </div>
-
               {/* Additional Information */}
               <div className="mt-6">
                 <h2 className="text-xl font-semibold text-gray-700 mb-3">
@@ -148,6 +150,7 @@ const DetailsPage = () => {
               <CarReviews
                 carId={car?.id}
                 reviews={car?.reviews}
+                canReview={data?.canReview}
                 refetchCar={refetch}
               />
             </div>

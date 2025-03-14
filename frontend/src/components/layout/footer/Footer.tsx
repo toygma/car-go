@@ -17,7 +17,7 @@ const contactInfo = [
 ];
 const Footer = () => {
   return (
-    <div className="relative">
+    <div className="relative mt-44">
       <div
         className="lg:h-[50vh] md:h-[70vh] h-full w-full absolute -z-10 bg-cover bg-center"
         style={{

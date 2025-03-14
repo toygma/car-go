@@ -17,6 +17,10 @@ export const reviewTypeDefs = gql`
     comment: String!
   }
 
+  type Query {
+    canReview(canReviewCarId: ID!): Boolean
+  }
+
   type Mutation {
     createUpdateReview(reviewInput: ReviewInput): Review
   }

@@ -1,5 +1,8 @@
 import { IUser } from "shared";
-import { createUpdateReview } from "../../controllers/review.controller";
+import {
+  canReview,
+  createUpdateReview,
+} from "../../controllers/review.controller";
 import { ReviewInput } from "../../types/review.types";
 
 export const reviewResolvers = {
@@ -11,5 +14,12 @@ export const reviewResolvers = {
     ) => {
       return createUpdateReview(reviewInput, user?.id);
     },
+  },
+  Query: {
+    canReview: async (
+      _: any,
+      { canReviewCarId }: { canReviewCarId: string },
+      { user }: { user: IUser }
+    ) => canReview(canReviewCarId, user?.id),
   },
 };

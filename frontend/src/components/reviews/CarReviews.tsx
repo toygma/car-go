@@ -12,61 +12,71 @@ import { userVar } from "@/apollo/apolloVars";
 
 interface Props {
   carId: string;
-  reviews: IReview[] | any;
+  reviews: IReview[];
+  canReview: boolean;
   refetchCar: () => void;
 }
 
-const CarReviews = ({ carId, reviews, refetchCar }: Props) => {
+const CarReviews = ({ carId, reviews, refetchCar, canReview }: Props) => {
   const user = useReactiveVar(userVar);
-
   const currentUserReview = findReviewByUserId(reviews, user?.id!);
+
   return (
     <div>
       <Card>
         <CardHeader className="bg-muted/25">
-          {currentUserReview && (
-            <div className="grid gap-0.5">
-              <CardTitle className="group flex items-center gap-2 mb-5 text-2xl">
-                <p className="text-2xl font-bold">Your Review</p>
-                <ReviewDialog
-                  buttonText={"Update Your Review"}
-                  carId={carId}
-                  review={currentUserReview}
-                  refetchCar={refetchCar}
-                />
-              </CardTitle>
-              <CardDescription>
-                <div className="px-2">
-                  <div className="flex my-5">
-                    <Avatar className="h-20 w-20">
-                      <AvatarImage src={currentUserReview?.user?.avatar?.url} />
-                      <AvatarFallback>
-                        {getUserName(currentUserReview?.user?.name)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="ms-4">
-                      <h3 className="text-xl font-black">
-                        {currentUserReview?.user?.name}
-                      </h3>
-                      <p className="mb-3">
-                        Last Updated: {currentUserReview?.updatedAt}
-                      </p>
-                      <StarRatings
-                        starRatedColor="orange"
-                        numberOfStars={5}
-                        name="rating"
-                        starDimension="25px"
-                        starSpacing="1px"
-                        rating={currentUserReview?.rating}
-                      />
-                      <p className="mt-4 text-md font-semibold">
-                        {currentUserReview?.comment}
-                      </p>
+          <div className="grid gap-0.5">
+            <>
+              {(currentUserReview || canReview) && (
+                <CardTitle className="group flex items-center gap-2 mb-5 text-2xl">
+                  <p className="text-2xl font-bold">Your Review</p>
+                  <ReviewDialog
+                    buttonText={"Update Your Review"}
+                    carId={carId}
+                    review={currentUserReview}
+                    refetchCar={refetchCar}
+                  />
+                </CardTitle>
+              )}
+              {currentUserReview ? (
+                <CardDescription>
+                  <div className="px-2">
+                    <div className="flex my-5">
+                      <Avatar className="h-20 w-20">
+                        <AvatarImage
+                          src={
+                            currentUserReview?.user?.avatar?.url ||
+                            "/default-avatar.png"
+                          }
+                        />
+                        <AvatarFallback>
+                          {getUserName(currentUserReview?.user?.name)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="ms-4">
+                        <h3 className="text-xl font-black">
+                          {currentUserReview?.user?.name}
+                        </h3>
+                        <p className="mb-3">
+                          Last Updated:{" "}
+                          {formatDate(currentUserReview?.updatedAt)}
+                        </p>
+                        <StarRatings
+                          starRatedColor="orange"
+                          numberOfStars={5}
+                          name="rating"
+                          starDimension="25px"
+                          starSpacing="1px"
+                          rating={currentUserReview?.rating}
+                        />
+                        <p className="mt-4 text-md font-semibold">
+                          {currentUserReview?.comment}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </CardDescription>
-              <CardTitle className="group flex items-center gap-2 mb-5 text-xl">
+                </CardDescription>
+              ) : (
                 <Alert
                   variant="destructive"
                   className="flex justify-between items-center w-full"
@@ -86,33 +96,35 @@ const CarReviews = ({ carId, reviews, refetchCar }: Props) => {
                     refetchCar={refetchCar}
                   />
                 </Alert>
-              </CardTitle>
-            </div>
-          )}
+              )}
+            </>
+          </div>
         </CardHeader>
       </Card>
 
-      {reviews?.length > 0 && (
+      {reviews.length > 0 && (
         <Card className="mt-10">
           <CardHeader className="bg-muted/25">
             <div className="grid gap-0.5">
               <CardTitle className="group flex items-center gap-2 mb-5 text-2xl">
                 <p className="text-2xl font-bold mt-5">
-                  {reviews?.length} Reviews
+                  {reviews.length} Reviews
                 </p>
               </CardTitle>
               <div className="text-sm text-muted-foreground">
                 <div className="px-8">
-                  {reviews?.map((review: IReview) => (
-                    <div key={review?.id}>
+                  {reviews.map((review: IReview) => (
+                    <div key={review.id}>
                       <DropdownMenuSeparator />
                       <div className="flex my-5">
                         <Avatar className="h-20 w-20">
-                          <AvatarImage src="sdf" />
+                          <AvatarImage
+                            src={
+                              review?.user?.avatar?.url || "/default-avatar.png"
+                            }
+                          />
                           <AvatarFallback>
-                            {getUserName(
-                              review?.user?.name.toLocaleUpperCase()
-                            )}
+                            {getUserName(review?.user?.name.toUpperCase())}
                           </AvatarFallback>
                         </Avatar>
                         <div className="ms-4">

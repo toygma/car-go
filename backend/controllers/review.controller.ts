@@ -1,3 +1,4 @@
+import Booking from "../models/booking.model";
 import Car from "../models/car.model";
 import Review from "../models/review.model";
 import { ReviewInput } from "../types/review.types";
@@ -25,6 +26,20 @@ export const createUpdateReview = async (
       });
       return review;
     }
+  } catch (error: any) {
+    console.log(error.message);
+  }
+};
+
+export const canReview = async (canReviewCarId: string, userId: string) => {
+  try {
+    const bookings = await Booking.findOne({
+      car: canReviewCarId,
+      user: userId,
+      "paymentInfo.status": "paid",
+    });
+
+    return !!bookings;
   } catch (error: any) {
     console.log(error.message);
   }

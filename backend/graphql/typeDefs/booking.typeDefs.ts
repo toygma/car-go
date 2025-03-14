@@ -74,7 +74,7 @@ export const bookingTypeDefs = gql`
   }
   type Query {
     getBookingById(bookingId: String!): Booking!
-    getCarBookedDates(carId: String!): [String]!
+    getCarBookedDates(carId: String): [String]!
     myBookings(page: Int, query: String): CurrentUserBookings
     getDashboardStats(startDate: String, endDate: String): DashboardStats
   }

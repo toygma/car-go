@@ -31,7 +31,11 @@ export const GET_ALL_QUERIES = gql`
 `;
 
 export const GET_CAR_BY_ID = gql`
-  query GetCarById($carId: ID, $getCarBookedDatesCarId2: String!) {
+  query GetCarById(
+    $carId: ID
+    $getCarBookedDatesCarId2: String!
+    $canReviewCarId: ID!
+  ) {
     getCarById(carId: $carId) {
       id
       name
@@ -75,5 +79,6 @@ export const GET_CAR_BY_ID = gql`
       }
     }
     getCarBookedDates(carId: $getCarBookedDatesCarId2)
+    canReview(canReviewCarId: $canReviewCarId)
   }
 `;

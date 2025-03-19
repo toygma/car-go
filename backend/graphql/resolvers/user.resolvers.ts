@@ -1,10 +1,13 @@
 import { Response } from "express";
 import {
+  deleteUser,
   forgotPassword,
+  getAllUsers,
   login,
   registerUser,
   updateAvatar,
   updatePassword,
+  updateUser,
   updateUserProfile,
 } from "../../controllers/user.controllers";
 import { UserInput } from "../../types/user.types";
@@ -21,6 +24,10 @@ export const userResolvers = {
       });
       return true;
     },
+    getAllUsers: async (
+      _: any,
+      { page, query }: { page: string; query: string }
+    ) => getAllUsers(page, query),
   },
   Mutation: {
     registerUser: async (_: any, { userInput }: { userInput: UserInput }) => {
@@ -58,8 +65,17 @@ export const userResolvers = {
     ) => {
       return updateAvatar(avatar, user.id);
     },
+    updateUser: async (
+      _: any,
+      { userId, userInput }: { userId: string; userInput: Partial<UserInput> }
+    ) => {
+      return updateUser(userInput, userId);
+    },
     forgotPassword: async (_: any, { email }: { email: string }) => {
       return forgotPassword(email);
+    },
+    deleteUser: async (_: any, { userId }: { userId: string }) => {
+      return deleteUser(userId);
     },
   },
 };

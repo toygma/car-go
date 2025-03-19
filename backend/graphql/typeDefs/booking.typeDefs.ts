@@ -65,18 +65,25 @@ export const bookingTypeDefs = gql`
     sales: [SalesData]
   }
 
+  type PaginatedBookings {
+    bookings: [Booking]
+    pagination: Pagination
+  }
+
   type Mutation {
     createBooking(bookingInput: BookingInput!): Booking!
     updateBooking(
       bookingId: String!
       bookingInput: UpdateBookingInput!
     ): Boolean
+    deleteBooking(bookingId: String!): Boolean
   }
   type Query {
     getBookingById(bookingId: String!): Booking!
     getCarBookedDates(carId: String): [String]!
     myBookings(page: Int, query: String): CurrentUserBookings
     getDashboardStats(startDate: String, endDate: String): DashboardStats
+    getAllBookings(page: Int, query: String): PaginatedBookings
   }
 
   input BookingAmountInput {

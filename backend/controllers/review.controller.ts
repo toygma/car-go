@@ -1,7 +1,29 @@
+import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 import Booking from "../models/booking.model";
 import Car from "../models/car.model";
 import Review from "../models/review.model";
 import { ReviewInput } from "../types/review.types";
+import APIFilters from "../utils/apiFilters";
+
+
+export const getAllReviews = catchAsyncErrors(
+  async (page: number,  query: string) => {
+    const resPerPage = 3;
+    const searchQuery = new APIFilters(Review)
+      .filters({car:query})
+      .populate("car");
+
+    let reviews = await searchQuery.model;
+
+    const totalCount = reviews.length;
+
+    searchQuery.pagination(page, resPerPage);
+    
+    reviews = await searchQuery.model.clone();
+
+    return { reviews, pagination: { totalCount, resPerPage } };
+  }
+);
 
 export const createUpdateReview = async (
   reviewInput: ReviewInput,

@@ -1,6 +1,8 @@
 import { IUser } from "shared";
 import {
   createBooking,
+  deleteBooking,
+  getAllBookings,
   getBookingById,
   getCarBookedDates,
   getDashboardStats,
@@ -32,6 +34,10 @@ export const bookingResolvers = {
     ) => {
       return getDashboardStats(startDate, endDate);
     },
+    getAllBookings: async (
+      _: any,
+      { page, query }: { page: string; query: string }
+    ) => getAllBookings(page, query),
   },
   Mutation: {
     createBooking: async (
@@ -47,5 +53,7 @@ export const bookingResolvers = {
       }: { bookingId: string; bookingInput: Partial<BookingInput> },
       { user }: { user: IUser }
     ) => updateBooking(bookingId, bookingInput, user),
+    deleteBooking: async (_: any, { bookingId }: { bookingId: string }) =>
+      deleteBooking(bookingId),
   },
 };

@@ -19,6 +19,25 @@ interface SalesStats {
   totalPaidCash: number;
 }
 
+export const getAllBookings = catchAsyncErrors(
+  async (page: number,  query: string) => {
+    const resPerPage = 4;
+    const searchQuery = new APIFilters(Booking)
+      .search(query)
+      .populate("car user");
+
+    let bookings = await searchQuery.model;
+
+    const totalCount = bookings.length;
+
+    searchQuery.pagination(page, resPerPage);
+    
+    bookings = await searchQuery.model.clone();
+
+    return { bookings, pagination: { totalCount, resPerPage } };
+  }
+);
+
 export const createBooking = catchAsyncErrors(
   async (bookingInput: BookingInput, userId: string) => {
     const newBooking = await Booking.create({
@@ -133,6 +152,20 @@ export const myBookings = catchAsyncErrors(
         resPerPage,
       },
     };
+  }
+);
+
+export const deleteBooking = catchAsyncErrors(
+  async (bookingId: string) => {
+    const booking = await Booking.findById(bookingId);
+
+    if (!booking) {
+      throw new NotFoundError("Booking not found");
+    }
+
+    await booking?.deleteOne()
+
+    return true;
   }
 );
 

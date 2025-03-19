@@ -2,6 +2,9 @@ import { lazy, Suspense } from "react";
 import { AdminProtectedRoute } from "./ProtectedRoute";
 import Loading from "@/components/custom/Loading";
 import NotFound from "@/components/custom/NotFound";
+import ListBookings from "@/pages/admin/bookings/ListBookings";
+import ListUsers from "@/pages/admin/users/ListUsers";
+import ListReviews from "@/pages/admin/reviews/ListReviews";
 
 const Dashboard = lazy(() => import("@/pages/admin/car/dashboard/Dashboard"));
 const ListCars = lazy(() => import("@/pages/admin/car/listCars/ListCars"));
@@ -55,6 +58,30 @@ export const AdminRoutes = {
       element: (
         <Suspense>
           <UpdateCar />
+        </Suspense>
+      ),
+    },
+    {
+      path: "bookings",
+      element: (
+        <Suspense>
+          <ListBookings />
+        </Suspense>
+      ),
+    },
+    {
+      path: "users",
+      element: (
+        <Suspense>
+          <ListUsers />
+        </Suspense>
+      ),
+    },
+    {
+      path: "reviews",
+      element: (
+        <Suspense>
+          <ListReviews />
         </Suspense>
       ),
     },

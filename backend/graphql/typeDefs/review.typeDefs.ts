@@ -11,6 +11,11 @@ export const reviewTypeDefs = gql`
     updatedAt: String
   }
 
+  type PaginatedReviews {
+    reviews: [Review]
+    pagination: Pagination
+  }
+
   input ReviewInput {
     car: ID!
     rating: Int!
@@ -19,6 +24,7 @@ export const reviewTypeDefs = gql`
 
   type Query {
     canReview(canReviewCarId: ID): Boolean
+    getAllReviews(page: Int, query: String): PaginatedReviews
   }
 
   type Mutation {

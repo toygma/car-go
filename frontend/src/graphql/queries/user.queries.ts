@@ -23,3 +23,28 @@ export const LOGOUT_USER = gql`
     logout
   }
 `;
+
+export const GET_ALL_USERS = gql`
+  query GetAllUsers($query: String, $page: Int) {
+    getAllUsers(query: $query, page: $page) {
+      pagination {
+        totalCount
+        resPerPage
+      }
+      users {
+        id
+        name
+        email
+        password
+        phoneNo
+        avatar {
+          url
+          public_id
+        }
+        role
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;

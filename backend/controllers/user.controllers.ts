@@ -10,6 +10,7 @@ import {
 } from "../utils/cloudinary";
 import { resetPasswordTemplate } from "../utils/emailTemplate";
 import sendEmail from "../utils/sendEmail";
+import APIFilters from "../utils/apiFilters";
 
 export const registerUser = catchAsyncErrors(async (userInput: UserInput) => {
   const { email, name, password, phoneNo } = userInput;
@@ -161,3 +162,52 @@ export const forgotPassword = catchAsyncErrors(async (email: string) => {
     throw new Error(error?.message);
   }
 });
+
+export const getAllUsers = catchAsyncErrors(
+  async (page: number, query: string) => {
+    const resPerPage = 3;
+    const searchQuery = new APIFilters(User).search(query);
+
+    let users = await searchQuery.model;
+
+    const totalCount = users.length;
+
+    searchQuery.pagination(page, resPerPage);
+
+    users = await searchQuery.model.clone();
+
+    return { users, pagination: { totalCount, resPerPage } };
+  }
+);
+
+export const updateUser = catchAsyncErrors(
+  async (userData: Partial<UserInput>, userId: string) => {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user?.set(userData).save();
+
+    return true;
+  }
+);
+
+export const deleteUser = catchAsyncErrors(
+  async (userId: string) => {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (user?.avatar?.public_id) {
+      await deleteCloudinary(user?.avatar?.public_id);
+    }
+
+    await user.deleteOne();
+
+    return true;
+  }
+);

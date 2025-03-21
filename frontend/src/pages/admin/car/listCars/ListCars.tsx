@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DELETE_CAR_MUTATION } from "@/graphql/mutations/car.mutation";
-import { GET_ALL_QUERIES } from "@/graphql/queries/car.queries";
+import { GET_ALL_CARS } from "@/graphql/queries/car.queries";
 import {
   calculateTablePaginationEnd,
   calculateTablePaginationStart,
@@ -46,7 +46,7 @@ const ListCars = () => {
   const navigate = useNavigate();
   const query = searchParams.get("query");
   const page = parseInt(searchParams.get("page") || "1", 10);
-  const { error, data, loading, refetch } = useQuery(GET_ALL_QUERIES, {
+  const { error, data, loading, refetch } = useQuery(GET_ALL_CARS, {
     variables: {
       page,
       query,

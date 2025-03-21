@@ -21,6 +21,7 @@ export const getAllCars = catchAsyncErrors(
 
     searchQuery.pagination(page, resPerPage);
     car = await searchQuery.model.clone();
+
     return { car, pagination: { totalCount, resPerPage } };
   }
 );

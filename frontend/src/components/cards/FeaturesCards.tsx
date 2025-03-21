@@ -72,7 +72,9 @@ const FeaturesCards = ({ cars }: ICarProps) => {
           />
           <span className="pt-1">{ratings?.value}</span>
           <Dot />{" "}
-          <span className="font-bold underline pt-1">{ratings?.count} Reviews</span>
+          <span className="font-bold underline pt-1">
+            {ratings?.count} Reviews
+          </span>
         </CardContent>
         <CardFooter className="flex justify-between">
           <div>

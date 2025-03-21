@@ -29,5 +29,6 @@ export const reviewTypeDefs = gql`
 
   type Mutation {
     createUpdateReview(reviewInput: ReviewInput): Review
+    deleteReview(reviewId: String!): Boolean
   }
 `;

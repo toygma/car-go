@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { useQuery } from "@apollo/client";
-import { GET_ALL_QUERIES } from "@/graphql/queries/car.queries";
+import { GET_ALL_CARS } from "@/graphql/queries/car.queries";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 
@@ -29,13 +29,13 @@ export interface SelectedValues {
 const RepairRight = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const start_year = searchParams.get("start_year")!;
-  const finish_year = searchParams.get("finish_year")!;
-  const min_mileage = searchParams.get("min_mileage")!;
-  const max_mileage = searchParams.get("max_mileage")!;
-  const brand = searchParams.get("brand")!;
-  const category = searchParams.get("category")!;
-  const transmission = searchParams.get("transmission")!;
+  const start_year = searchParams.get("start_year") || "";
+  const finish_year = searchParams.get("finish_year") || "";
+  const min_mileage = searchParams.get("min_mileage")|| "";
+  const max_mileage = searchParams.get("max_mileage")|| "";
+  const brand = searchParams.get("brand")|| "";
+  const category = searchParams.get("category")|| "";
+  const transmission = searchParams.get("transmission")|| "";
 
   //year
   const yearOptions = Array.from({ length: 21 }, (_, i) => {
@@ -59,7 +59,7 @@ const RepairRight = () => {
     filters,
   };
 
-  const { data, loading } = useQuery(GET_ALL_QUERIES, { variables });
+  const { data, loading } = useQuery(GET_ALL_CARS, { variables });
   const form = useForm<createFilteredSchema>({
     resolver: zodResolver(filteredMenuSchema),
     defaultValues: {

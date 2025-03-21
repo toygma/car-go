@@ -10,6 +10,7 @@ import NotFound from "@/components/custom/NotFound";
 import BookingForm from "./partials/BookingForm";
 import CarReviews from "@/components/reviews/CarReviews";
 import { Dot } from "lucide-react";
+import { CarFaqs } from "./partials/CarFaqs";
 
 const DetailsPage = () => {
   const params = useParams();
@@ -27,12 +28,12 @@ const DetailsPage = () => {
     setActive(index);
   };
 
-  const car: ICar = data?.getCarById;
-  const disabledDates = data?.getCarBookedDates;
-
   if (loading) {
     return <Loading />;
   }
+  const car: ICar = data?.getCarById;
+  console.log("🚀 ~ DetailsPage ~ car:", car);
+  const disabledDates = data?.getCarBookedDates;
 
   const {
     address,
@@ -140,6 +141,9 @@ const DetailsPage = () => {
               </div>
             </div>
           </div>
+
+          {/* FAQ Section */}
+          <CarFaqs faqs={data?.getAllFaqs}/>
 
           {/* Reviews Section */}
           <div className="mt-8 bg-white p-6 rounded-lg shadow-lg">

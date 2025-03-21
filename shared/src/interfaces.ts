@@ -129,3 +129,12 @@ export interface IReview {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IFaq {
+  id: string;
+  user: IUser;
+  answer: string;
+  question: string;
+  createdAt: string;
+  updatedAt: string;
+}

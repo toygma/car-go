@@ -30,8 +30,8 @@ import { Search, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { IReview } from "shared";
-import { DELETE_USER_MUTATION } from "@/graphql/mutations/user.mutations";
 import { GET_ALL_REVIEWS } from "@/graphql/queries/review.queries";
+import { DELETE_REVIEW_MUTATION } from "@/graphql/mutations/review.mutation";
 
 const ListReviews = () => {
   const [searchParams] = useSearchParams();
@@ -57,9 +57,9 @@ const ListReviews = () => {
     }
   }, [query]);
 
-  //DELETE user
-  const [deleteUser, { loading: deleteUserLoading, error: deleteError }] =
-    useMutation(DELETE_USER_MUTATION, {
+  //DELETE review
+  const [deleteReview, { loading: deleteReviewLoading, error: deleteError }] =
+    useMutation(DELETE_REVIEW_MUTATION, {
       onCompleted: () => {
         refetch();
         toast({
@@ -86,8 +86,8 @@ const ListReviews = () => {
 
   const deleteCarHandler = async (id: string) => {
     try {
-      await deleteUser({
-        variables: { userId: id },
+      await deleteReview({
+        variables: { reviewId: id },
       });
     } catch (error) {
       toastNotification(error);
@@ -168,8 +168,8 @@ const ListReviews = () => {
                         variant={"destructive"}
                         className="ms-2"
                         size={"icon"}
-                        loading={deleteUserLoading}
-                        disabled={deleteUserLoading}
+                        loading={deleteReviewLoading}
+                        disabled={deleteReviewLoading}
                       >
                         <Trash className="w-4 h-4" />
                       </Button>

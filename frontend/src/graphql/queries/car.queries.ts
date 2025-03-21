@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const GET_ALL_QUERIES = gql`
-  query Cars($query: String, $filters: CarFilters, $page: Int) {
+export const GET_ALL_CARS = gql`
+  query GetAllCars($page: Int, $filters: CarFilters, $query: String) {
     getAllCars(query: $query, filters: $filters, page: $page) {
       car {
         id
@@ -12,6 +12,7 @@ export const GET_ALL_QUERIES = gql`
         brand
         transmission
         milleage
+        address
         year
         images {
           public_id
@@ -33,8 +34,8 @@ export const GET_ALL_QUERIES = gql`
 export const GET_CAR_BY_ID = gql`
   query GetCarById(
     $carId: ID!
-    $getCarBookedDatesCarId2: String
     $canReviewCarId: ID
+    $getCarBookedDatesCarId2: String
   ) {
     getCarById(carId: $carId) {
       id
@@ -65,20 +66,29 @@ export const GET_CAR_BY_ID = gql`
             public_id
           }
         }
+        car {
+          id
+          name
+        }
         rating
         comment
         createdAt
         updatedAt
       }
       category
-      createdAt
-      updatedAt
       ratings {
         value
         count
       }
+      createdAt
+      updatedAt
     }
-    getCarBookedDates(carId: $getCarBookedDatesCarId2)
     canReview(canReviewCarId: $canReviewCarId)
+    getCarBookedDates(carId: $getCarBookedDatesCarId2)
+    getAllFaqs {
+      id
+      question
+      answer
+    }
   }
 `;

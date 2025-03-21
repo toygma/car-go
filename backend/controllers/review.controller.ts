@@ -66,3 +66,16 @@ export const canReview = async (canReviewCarId: string, userId: string) => {
     console.log(error.message);
   }
 };
+
+
+export const deleteReview = catchAsyncErrors(
+  async (reviewId: string) => {
+    const review = await Review.findByIdAndDelete({_id:reviewId});
+
+    if (!review) {
+      throw new Error("Review not found");
+    }
+
+    return true;
+  }
+);

@@ -5,6 +5,7 @@ import NotFound from "@/components/custom/NotFound";
 import ListBookings from "@/pages/admin/bookings/ListBookings";
 import ListUsers from "@/pages/admin/users/ListUsers";
 import ListReviews from "@/pages/admin/reviews/ListReviews";
+import ListFaqs from "@/pages/admin/faq/ListFaqs";
 
 const Dashboard = lazy(() => import("@/pages/admin/car/dashboard/Dashboard"));
 const ListCars = lazy(() => import("@/pages/admin/car/listCars/ListCars"));
@@ -82,6 +83,14 @@ export const AdminRoutes = {
       element: (
         <Suspense>
           <ListReviews />
+        </Suspense>
+      ),
+    },
+    {
+      path: "faqs",
+      element: (
+        <Suspense>
+          <ListFaqs />
         </Suspense>
       ),
     },

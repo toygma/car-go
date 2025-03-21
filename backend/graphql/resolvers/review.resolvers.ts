@@ -2,6 +2,7 @@ import { IUser } from "shared";
 import {
   canReview,
   createUpdateReview,
+  deleteReview,
   getAllReviews,
 } from "../../controllers/review.controller";
 import { ReviewInput } from "../../types/review.types";
@@ -14,6 +15,9 @@ export const reviewResolvers = {
       { user }: { user: IUser }
     ) => {
       return createUpdateReview(reviewInput, user?.id);
+    },
+    deleteReview: async (_: any, { reviewId }: { reviewId: string }) => {
+      return deleteReview(reviewId);
     },
   },
   Query: {

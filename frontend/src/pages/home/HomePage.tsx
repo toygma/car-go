@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import SectionRepair from "./partials/sectionRepair/SectionRepair";
 import FeaturesCards from "@/components/cards/FeaturesCards";
 import Title from "@/shared/Title";
-import { GET_ALL_QUERIES } from "@/graphql/queries/car.queries";
+import { GET_ALL_CARS } from "@/graphql/queries/car.queries";
 import { ICar } from "shared";
 import Loading from "@/components/custom/Loading";
 import Sidebar from "./partials/sidebar/Sidebar";
@@ -38,7 +38,7 @@ const HomePage = () => {
   };
 
   const filters = {
-    status: "Active",
+    status: "Draft",
     ...(category && { category }),
     ...(brand && { brand }),
     ...(transmission && { transmission }),
@@ -50,8 +50,9 @@ const HomePage = () => {
     query,
   };
 
-  const { data, loading, error } = useQuery(GET_ALL_QUERIES, { variables });
-
+  const { data, loading, error } = useQuery(GET_ALL_CARS, { variables });
+  console.log("data:", data);
+  
   useEffect(() => {
     if (error) {
       toastNotification(error);

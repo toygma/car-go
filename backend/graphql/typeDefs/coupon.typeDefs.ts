@@ -18,7 +18,7 @@ export const couponTypeDefs = gql`
     code: String!
     discountPercent: Int!
     expiry: String!
-    car: ID!
+    car: ID
   }
 
   type Query {
@@ -27,5 +27,7 @@ export const couponTypeDefs = gql`
 
   type Mutation {
     createCoupon(couponInput: CouponInput!): Coupon
+    updateCoupon(couponId: ID!, couponInput: CouponInput!): Coupon
+    deleteCoupon(couponId: ID!): Boolean
   }
 `;

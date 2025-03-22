@@ -10,7 +10,7 @@ import {
 import { useMutation } from "@apollo/client";
 import { toast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
-import { toastNotification } from "@/helpers/helpers";
+import { isValidDate, toastNotification } from "@/helpers/helpers";
 
 import { Pencil } from "lucide-react";
 
@@ -20,12 +20,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import EditInput from "@/components/input/EditInput";
 import { ICoupon } from "shared/src/interfaces";
-import { UPDATE_MUTATION_FAQ } from "@/graphql/mutations/faq.mutation";
 import {
   couponSchema,
   createCouponSchema,
 } from "@/validation/coupon/coupon.schema";
-import { CREATE_MUTATION_COUPON } from "@/graphql/mutations/coupon.mutation";
+import {
+  CREATE_MUTATION_COUPON,
+  UPDATE_MUTATION_COUPON,
+} from "@/graphql/mutations/coupon.mutation";
 import CalenderInput from "@/components/input/CalenderInput";
 
 interface Props {
@@ -41,10 +43,14 @@ export function CouponDialog({
 }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const parsedExpiry = updateCouponData?.expiry
+    ? new Date(updateCouponData.expiry)
+    : new Date();
+
   const defaultValues = updateCouponData
     ? {
         ...updateCouponData,
-        expiry: new Date(updateCouponData.expiry?.toString()),
+        expiry: isValidDate(parsedExpiry) ? parsedExpiry : new Date(),
       }
     : {
         name: "",
@@ -73,8 +79,8 @@ export function CouponDialog({
     }
   );
 
-  const [updateFaq, { loading: updateLoading }] = useMutation(
-    UPDATE_MUTATION_FAQ,
+  const [updateCoupon, { loading: updateLoading }] = useMutation(
+    UPDATE_MUTATION_COUPON,
     {
       onCompleted: () => {
         refetchCoupons();
@@ -102,7 +108,7 @@ export function CouponDialog({
     };
 
     if (updateCouponData?.id) {
-      await updateFaq({
+      await updateCoupon({
         variables: { couponId: updateCouponData?.id, couponInput },
       });
     } else {

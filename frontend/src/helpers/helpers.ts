@@ -108,3 +108,7 @@ export const findReviewByUserId = (reviews: IReview[], userId: string) => {
 export const formatAmountWithCommas = (amount: number) => {
   return new Intl.NumberFormat("en-US").format(amount);
 };
+
+export const isValidDate = (date: Date) => {
+  return date instanceof Date && !isNaN(date.getTime());
+};

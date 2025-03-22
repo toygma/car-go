@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/table";
 import { useMutation, useQuery } from "@apollo/client";
 import { ICoupon } from "shared/src/interfaces";
-import { DELETE_MUTATION_FAQ } from "@/graphql/mutations/faq.mutation";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
@@ -24,6 +23,7 @@ import { formatDate } from "@/helpers/helpers";
 import { GET_ALL_COUPONS } from "@/graphql/queries/coupon.queries";
 import { useParams } from "react-router-dom";
 import { CouponDialog } from "./partials/CouponDialog";
+import { DELETE_MUTATION_COUPON } from "@/graphql/mutations/coupon.mutation";
 
 const ListCoupons = () => {
   const params = useParams();
@@ -36,8 +36,8 @@ const ListCoupons = () => {
   const coupons = data?.getAllCoupons;
 
   //DELETE faq
-  const [deleteFaq, { loading: deleteFaqLoading }] = useMutation(
-    DELETE_MUTATION_FAQ,
+  const [deleteCoupon, { loading: deleteCouponLoading }] = useMutation(
+    DELETE_MUTATION_COUPON,
     {
       onCompleted: () => {
         refetch();
@@ -49,9 +49,9 @@ const ListCoupons = () => {
     }
   );
 
-  const deleteFaqHandler = async (id: string) => {
-    await deleteFaq({
-      variables: { faqId: id },
+  const deleteCouponHandler = async (id: string) => {
+    await deleteCoupon({
+      variables: { couponId: id },
     });
   };
 
@@ -100,15 +100,15 @@ const ListCoupons = () => {
                   <TableCell>
                     <CouponDialog
                       refetchCoupons={refetch}
-                      updateCouponData={coupons}
+                      updateCouponData={coupon}
                     />
-                    <span onClick={() => deleteFaqHandler(coupon?.id)}>
+                    <span onClick={() => deleteCouponHandler(coupon?.id)}>
                       <Button
                         variant={"destructive"}
                         className="ms-2"
                         size={"icon"}
-                        loading={deleteFaqLoading}
-                        disabled={deleteFaqLoading}
+                        loading={deleteCouponLoading}
+                        disabled={deleteCouponLoading}
                       >
                         <Trash className="w-4 h-4" />
                       </Button>

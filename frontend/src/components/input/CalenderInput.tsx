@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -16,6 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { formatDate } from "@/helpers/helpers";
 
 interface Props {
   control: any;
@@ -43,10 +43,11 @@ const CalenderInput = ({ control, name, label, error }: Props) => {
                       !field.value && "text-muted-foreground"
                     )}
                   >
-                    {field.value ? (
-                      format(field.value, "PPP")
+                    {field?.value instanceof Date &&
+                    !isNaN(field.value.getTime()) ? (
+                      formatDate(field.value)
                     ) : (
-                      <span>Pick Expiry date</span>
+                      <span>{formatDate(field?.value)}</span>
                     )}
                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                   </Button>

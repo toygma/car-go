@@ -23,3 +23,21 @@ export const createCoupon = catchAsyncErrors(
     return coupon;
   }
 );
+
+export const updateCoupon = catchAsyncErrors(
+  async (couponId: string, couponInput: CouponInput) => {
+    const coupon = await Coupon.findByIdAndUpdate(couponId, couponInput, {
+      new: true,
+    });
+
+    if (!coupon) throw new Error("coupon not found");
+
+    return coupon;
+  }
+);
+
+export const deleteCoupon = catchAsyncErrors(async (couponId: string) => {
+  const coupon = await Coupon.findByIdAndDelete(couponId);
+  if (!coupon) throw new Error("coupon not found");
+  return true;
+});

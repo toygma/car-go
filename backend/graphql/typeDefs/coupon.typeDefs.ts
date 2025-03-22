@@ -18,10 +18,14 @@ export const couponTypeDefs = gql`
     code: String!
     discountPercent: Int!
     expiry: String!
-    car:ID!
+    car: ID!
   }
 
   type Query {
-    getAllCoupons: String
+    getAllCoupons(carId: ID!): [Coupon]
+  }
+
+  type Mutation {
+    createCoupon(createInput: CouponInput!): Coupon
   }
 `;

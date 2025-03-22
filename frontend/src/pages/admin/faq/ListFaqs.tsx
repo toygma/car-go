@@ -16,14 +16,36 @@ import {
 } from "@/components/ui/table";
 import { GET_ALL_FAQS } from "@/graphql/queries/faq.queries";
 import { formatDate } from "@/helpers/helpers";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { IFaq } from "shared/src/interfaces";
 import { FaqDialogue } from "./partials/FaqDialog";
+import { DELETE_MUTATION_FAQ } from "@/graphql/mutations/faq.mutation";
+import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 
 const ListFaqs = () => {
   const { data, loading, refetch } = useQuery(GET_ALL_FAQS);
 
   const faqs = data?.getAllFaqs;
+
+  //DELETE faq
+  const [deleteFaq, { loading: deleteFaqLoading}] =
+    useMutation(DELETE_MUTATION_FAQ, {
+      onCompleted: () => {
+        refetch();
+        toast({
+          title: "Successfully",
+          variant: "success",
+        });
+      },
+    });
+
+  const deleteFaqHandler = async (id: string) => {
+    await deleteFaq({
+      variables: { faqId: id },
+    });
+  };
 
   if (loading) {
     return <Loading size={60} fullScreen={true} />;
@@ -65,6 +87,17 @@ const ListFaqs = () => {
                   <TableCell>{formatDate(faq?.createdAt)}</TableCell>
                   <TableCell>
                     <FaqDialogue refetchFaqs={refetch} updateFaqData={faq} />
+                    <span onClick={() => deleteFaqHandler(faq?.id)}>
+                      <Button
+                        variant={"destructive"}
+                        className="ms-2"
+                        size={"icon"}
+                        loading={deleteFaqLoading}
+                        disabled={deleteFaqLoading}
+                      >
+                        <Trash className="w-4 h-4" />
+                      </Button>
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}

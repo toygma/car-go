@@ -22,6 +22,7 @@ export const faqTypeDefs = gql`
 
   type Mutation {
     createFaq(faqInput: FaqInput!): Faq
-    updateFaq(faqId: String!, faqInput: FaqInput!): Faq
+    updateFaq(faqId: ID!, faqInput: FaqInput!): Faq
+    deleteFaq(faqId: ID!): Boolean
   }
 `;

@@ -30,3 +30,15 @@ export const updateFaq = catchAsyncErrors(
     return faq;
   }
 );
+
+export const deleteFaq = catchAsyncErrors(async (faqId: string) => {
+  const faq = await Faq.findById(faqId);
+
+  if (!faq) {
+    throw new Error("Faq not found");
+  }
+
+  await faq.deleteOne();
+
+  return true;
+});

@@ -1,6 +1,7 @@
 import { IUser } from "shared";
 import {
   createFaq,
+  deleteFaq,
   getAllFaqs,
   updateFaq,
 } from "../../controllers/faq.controller";
@@ -20,5 +21,6 @@ export const faqResolvers = {
       _: any,
       { faqId, faqInput }: { faqId: string; faqInput: FaqInput }
     ) => updateFaq(faqId, faqInput),
+    deleteFaq: async (_: any, { faqId }: { faqId: string }) => deleteFaq(faqId),
   },
 };

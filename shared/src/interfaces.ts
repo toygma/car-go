@@ -138,3 +138,15 @@ export interface IFaq {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ICoupon {
+  id: string;
+  user: IUser;
+  car: ICar;
+  name: string;
+  code: string;
+  discountPercent: number;
+  expiry: Date;
+  createdAt: string;
+  updatedAt: string;
+}

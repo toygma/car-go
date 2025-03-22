@@ -26,6 +26,6 @@ export const couponTypeDefs = gql`
   }
 
   type Mutation {
-    createCoupon(createInput: CouponInput!): Coupon
+    createCoupon(couponInput: CouponInput!): Coupon
   }
 `;

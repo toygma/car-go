@@ -10,6 +10,7 @@ export const couponResolvers = {
     getAllCoupons: async (_: any, { carId }: { carId: string }) =>
       getAllCoupons(carId),
   },
+
   Mutation: {
     createCoupon: async (
       _: any,

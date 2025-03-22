@@ -4,7 +4,7 @@ import Coupon from "../models/coupon.model";
 import { CouponInput } from "../types/coupon.types";
 
 export const getAllCoupons = catchAsyncErrors(async (carId: string) => {
-  const coupons = await Coupon.find({ _id: carId });
+  const coupons = await Coupon.find({ car: carId }).sort({ createdAt: -1 });
 
   return coupons;
 });
@@ -13,7 +13,7 @@ export const createCoupon = catchAsyncErrors(
   async (couponInput: CouponInput, userId: string) => {
     const car = await Car.findById(couponInput.car);
 
-    if (car) throw new Error("car not found");
+    if (!car) throw new Error("car not found");
 
     const coupon = await Coupon.create({
       ...couponInput,

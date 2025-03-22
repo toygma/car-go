@@ -141,9 +141,9 @@ const DetailsPage = () => {
               </div>
             </div>
           </div>
-
+          <br />
           {/* FAQ Section */}
-          <CarFaqs faqs={data?.getAllFaqs}/>
+          <CarFaqs faqs={data?.getAllFaqs} />
 
           {/* Reviews Section */}
           <div className="mt-8 bg-white p-6 rounded-lg shadow-lg">

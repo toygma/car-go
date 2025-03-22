@@ -3,6 +3,7 @@ import {
   createCoupon,
   deleteCoupon,
   getAllCoupons,
+  getCoupon,
   updateCoupon,
 } from "../../controllers/coupon.controller";
 import { CouponInput } from "../../types/coupon.types";
@@ -11,6 +12,10 @@ export const couponResolvers = {
   Query: {
     getAllCoupons: async (_: any, { carId }: { carId: string }) =>
       getAllCoupons(carId),
+    getCoupon: async (
+      _: any,
+      { couponCode, carId }: { couponCode: string; carId: string }
+    ) => getCoupon(couponCode, carId),
   },
 
   Mutation: {

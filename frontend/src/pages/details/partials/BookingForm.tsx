@@ -29,6 +29,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NEW_BOOKING_MUTATION } from "@/graphql/mutations/booking.mutation";
 import AlertMessage from "@/components/custom/AlertMessage";
+import CouponCard from "@/pages/coupon/CouponCard";
 
 type Props = {
   carId: string;
@@ -48,6 +49,7 @@ const BookingForm = ({ carId, rentPerDay = 0, disableDates }: Props) => {
     undefined
   );
   const [available, setAvailable] = useState<boolean>(false);
+  const [couponDiscount, setCouponDiscount] = useState(0);
   const navigate = useNavigate();
   const [createBooking, { loading }] = useMutation(NEW_BOOKING_MUTATION);
 
@@ -68,9 +70,13 @@ const BookingForm = ({ carId, rentPerDay = 0, disableDates }: Props) => {
   const bookedDates = disableDates?.map(formatDate);
 
   useEffect(() => {
-    const { rent, tax, discount, total } = calculateRent(daysRent, rentPerDay);
+    const { rent, tax, discount, total } = calculateRent(
+      daysRent,
+      rentPerDay,
+      couponDiscount
+    );
     setTotalPer({ rent, tax, discount, total });
-  }, [daysRent, rentPerDay]);
+  }, [daysRent, rentPerDay, couponDiscount]);
 
   const dateChangeHandler = (date: DateRange | undefined) => {
     if (!date?.from || !date?.to) {
@@ -78,6 +84,7 @@ const BookingForm = ({ carId, rentPerDay = 0, disableDates }: Props) => {
     }
 
     const allDates = getAllDatesBetween(date.from, date.to);
+
     const filteredDates = allDates.filter((element: any) =>
       bookedDates?.includes(element)
     );
@@ -177,6 +184,7 @@ const BookingForm = ({ carId, rentPerDay = 0, disableDates }: Props) => {
               />
             </CardContent>
           </Card>
+
           <br />
           <Card className="w-full">
             <CardHeader>
@@ -196,7 +204,18 @@ const BookingForm = ({ carId, rentPerDay = 0, disableDates }: Props) => {
               </div>
               <div className="flex items-center justify-between">
                 <h1>Total Rent:</h1>
-                <span>${totalPer.rent.toFixed(2)}</span>
+                <span>
+                  {couponDiscount > 0 ? (
+                    <>
+                      <span className="line-through me-2">
+                        ${totalPer.rent.toFixed(2)}
+                      </span>
+                      ${(totalPer.rent - totalPer?.discount).toFixed(2)}
+                    </>
+                  ) : (
+                    <>${totalPer.rent.toFixed(2)}</>
+                  )}
+                </span>
               </div>
               <div className="flex items-center justify-between">
                 <h1>Tax(15%):</h1>
@@ -228,6 +247,9 @@ const BookingForm = ({ carId, rentPerDay = 0, disableDates }: Props) => {
           </Card>
         </form>
       </Form>
+      <CouponCard
+        onCouponChange={(discount: number) => setCouponDiscount(discount)}
+      />
     </>
   );
 };

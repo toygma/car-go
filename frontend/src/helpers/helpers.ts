@@ -42,15 +42,19 @@ export const getUserName = (fullName: any) => {
   return nameSplice;
 };
 
-export const calculateRent = (daysRent: number, rentPerDay: number) => {
-  const rent = daysRent * rentPerDay;
-  const tax = rent * 0.15;
-  const discount = 0;
-  const total = rent + tax - discount;
+export const calculateRent = (
+  daysRent: number,
+  rentPerDay: number,
+  couponDiscount: number
+) => {
+  const rent = daysRent * rentPerDay; // Toplam kira
+  const tax = rent * 0.15; // %15 vergi
+  const discountValue = (rent * couponDiscount) / 100; // İndirim
+  const total = rent + tax - discountValue; // Toplam tutar: (Kira + Vergi) - İndirim
   return {
     rent,
     tax,
-    discount,
+    discount: discountValue,
     total,
   };
 };

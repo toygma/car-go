@@ -22,6 +22,9 @@ import { faqTypeDefs } from "../graphql/typeDefs/faq.typeDefs";
 import { faqResolvers } from "../graphql/resolvers/faq.resolvers";
 import { couponResolvers } from "../graphql/resolvers/coupon.resolvers";
 import { couponTypeDefs } from "../graphql/typeDefs/coupon.typeDefs";
+import { createServer } from "http";
+import { WebSocketServer } from "ws";
+import { useServer } from "graphql-ws/use/ws";
 
 interface CustomJWTPayload {
   _id: string;
@@ -35,7 +38,7 @@ export async function startApolloServer(app: Application) {
     paymentTypeDefs,
     reviewTypeDefs,
     faqTypeDefs,
-    couponTypeDefs
+    couponTypeDefs,
   ];
   const resolvers = [
     carResolvers,
@@ -44,7 +47,7 @@ export async function startApolloServer(app: Application) {
     paymentResolvers,
     reviewResolvers,
     faqResolvers,
-    couponResolvers
+    couponResolvers,
   ];
 
   const schema = makeExecutableSchema({
@@ -54,12 +57,37 @@ export async function startApolloServer(app: Application) {
 
   const schemaWithMiddleware = applyMiddleware(schema, permissions);
 
+  const httpServer = createServer(app);
+
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: "/graphql",
+  });
+
+  const serverCleanup = useServer(
+    {
+      schema: schemaWithMiddleware,
+    },
+    wsServer
+  );
+
   const apolloServer = new ApolloServer({
     schema: schemaWithMiddleware,
     formatError: (err) => {
       console.error("🔥 GraphQL Error:", err);
       return err;
     },
+    plugins: [
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              await serverCleanup.dispose();
+            },
+          };
+        },
+      },
+    ],
   });
 
   await apolloServer.start();
@@ -94,7 +122,7 @@ export async function startApolloServer(app: Application) {
       },
     })
   );
-
+  const PORT = process.env.PORT || 5000;
   app.post("/api/payment/webhook", async (req: Request, res: Response) => {
     const signature = req.headers["stripe-signature"];
     const rawBody = req.rawBody;
@@ -105,5 +133,9 @@ export async function startApolloServer(app: Application) {
     } else {
       res.status(400).json({ success: false });
     }
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT} `);
   });
 }

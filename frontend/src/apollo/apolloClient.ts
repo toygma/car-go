@@ -1,8 +1,8 @@
-//utility yardımcı fonksiyon
-
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient, HttpLink, InMemoryCache, split } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { createClient } from "graphql-ws";
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
@@ -21,8 +21,26 @@ const httpLink = new HttpLink({
   credentials: "include",
 });
 
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: import.meta.env.VITE_REACT_GRAPHQL_WS_URI,
+  })
+);
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  httpLink
+);
+
 const client = new ApolloClient({
-  link: errorLink.concat(httpLink),
+  link: errorLink.concat(splitLink),
   cache: new InMemoryCache(),
 });
 

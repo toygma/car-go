@@ -30,9 +30,6 @@ DbConnect();
 
 async function startServer() {
   await startApolloServer(app);
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT} `);
-  });
 }
 
 startServer();

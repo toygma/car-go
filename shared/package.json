@@ -10,7 +10,7 @@
   "license": "ISC",
   "types": "dist/index.d.ts",
   "description": "",
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^9.1.2",
     "rimraf": "^6.0.1"
   }

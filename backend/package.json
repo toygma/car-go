@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node ./backend/dist/app.js",
+    "start": "node ./dist/app.js",
     "dev": "nodemon --exec ts-node app.ts",
     "seeder": "tsc seeder/seeder.ts --outDir .temp && node .temp/seeder/seeder.js && rimraf .temp",
     "build:backend": "npm install && tsc",
-    "build:shared": "cd ./shared && npm run build",
-    "build:frontend": "cd ./frontend && npm install && npm run build",
+    "build:shared": "cd ../shared && npm run build",
+    "build:frontend": "cd ../frontend && npm install && npm run build",
     "build": "npm run build:shared && npm run build:frontend && npm run build:backend"
   },
   "keywords": [],
@@ -53,7 +53,7 @@
     "node-geocoder": "^4.4.1",
     "nodemailer": "^6.10.0",
     "nodemon": "^3.1.9",
-    "shared": "file:./shared",
+    "shared": "file:../shared",
     "stripe": "^17.7.0",
     "ws": "^8.18.1"
   }

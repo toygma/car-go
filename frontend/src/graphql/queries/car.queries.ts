@@ -33,7 +33,7 @@ export const GET_ALL_CARS = gql`
 
 export const GET_CAR_BY_ID = gql`
   query GetCarById(
-    $carId: ID!
+    $carId: ID
     $canReviewCarId: ID
     $getCarBookedDatesCarId2: String
   ) {
@@ -66,10 +66,7 @@ export const GET_CAR_BY_ID = gql`
             public_id
           }
         }
-        car {
-          id
-          name
-        }
+
         rating
         comment
         createdAt

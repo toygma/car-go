@@ -22,6 +22,7 @@ const DetailsPage = () => {
     },
     fetchPolicy: "network-only",
   });
+  console.log("🚀 ~ DetailsPage ~ data:", data);
   const [active, setActive] = useState<number | null>(null);
 
   const handlerClickActive = (index: number) => {
@@ -32,29 +33,7 @@ const DetailsPage = () => {
     return <Loading />;
   }
   const car: ICar = data?.getCarById;
-  console.log("🚀 ~ DetailsPage ~ car:", car);
   const disabledDates = data?.getCarBookedDates;
-
-  const {
-    address,
-    brand,
-    category,
-    createdAt,
-    description,
-    doors,
-    fuelType,
-    rentPerDay,
-    images,
-    milleage,
-    name,
-    power,
-    ratings,
-    seats,
-    status,
-    transmission,
-    year,
-    id,
-  } = car;
 
   if (error?.graphQLErrors[0]?.extensions?.code === "NOT_FOUND") {
     return <NotFound />;
@@ -67,7 +46,7 @@ const DetailsPage = () => {
         <div className="w-full lg:w-3/4">
           <div className="flex items-center gap-4">
             <StarRatings
-              rating={ratings?.value}
+              rating={Number(car?.ratings?.value) || 0}
               starRatedColor={"orange"}
               numberOfStars={5}
               name="rating"
@@ -75,18 +54,20 @@ const DetailsPage = () => {
               starSpacing={"1px"}
             />
             <span className="mt-1 flex items-center justify-center">
-              {ratings?.value} <Dot />
-              {ratings?.count} reviews
+              {car?.ratings?.value} <Dot />
+              {car?.ratings?.count} reviews
             </span>
             <h2 className="text-xl font-semibold text-gray-400 pt-[3px]">
-              {moment(Number(createdAt)).format("ll")}
+              {moment(Number(car?.createdAt)).format("ll")}
             </h2>
           </div>
           {/* Main Image */}
           <div className="bg-gray-100 p-4 rounded-lg shadow-lg">
             <img
               src={
-                active !== null ? (images[active]?.url as any) : images[0]?.url
+                active !== null
+                  ? (car?.images[active]?.url as any)
+                  : car?.images[0]?.url
               }
               alt="banner"
               className="object-cover w-full h-96 rounded-lg transition-transform duration-300 hover:scale-105"
@@ -95,38 +76,42 @@ const DetailsPage = () => {
 
           {/* Thumbnail Images */}
           <div className="mt-6 flex items-center gap-4  pb-4">
-            {images.map((car, index) => (
-              <img
-                onClick={() => handlerClickActive(index)}
-                key={index}
-                src={car?.url}
-                alt="banner"
-                className={`object-cover w-20 h-20 cursor-pointer rounded-lg transition-all duration-300 ${
-                  active === index
-                    ? "border-4 border-blue-500 transform scale-110"
-                    : "border-2 border-gray-200 hover:border-blue-300"
-                }`}
-              />
-            ))}
+            {car?.images?.length > 0 &&
+              car.images.map((image, index) => (
+                <img
+                  onClick={() => handlerClickActive(index)}
+                  key={index}
+                  src={image?.url}
+                  alt="banner"
+                  className={`object-cover w-20 h-20 cursor-pointer rounded-lg transition-all duration-300 ${
+                    active === index
+                      ? "border-4 border-blue-500 transform scale-110"
+                      : "border-2 border-gray-200 hover:border-blue-300"
+                  }`}
+                />
+              ))}
           </div>
 
           {/* Car Information */}
           <div className="mt-8 bg-white p-6 rounded-lg shadow-lg">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              {name} ({year}) - Status({status})
+              {car?.name} ({car?.year}) - Status({car?.status})
             </h1>
             <div className="space-y-6">
               {/* Car Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <InfoBox label="Brand Name" value={brand} />
-                <InfoBox label="Total Doors" value={doors} />
-                <InfoBox label="Car Type" value={category} />
-                <InfoBox label="Power" value={power ? power : "none"} />
-                <InfoBox label="Fuel" value={fuelType} />
-                <InfoBox label="Gear" value={transmission} />
-                <InfoBox label="Total Seats" value={seats} />
-                <InfoBox label="Milleage" value={milleage} />
-                <InfoBox label="Year" value={year} />
+                <InfoBox label="Brand Name" value={car?.brand} />
+                <InfoBox label="Total Doors" value={car?.doors} />
+                <InfoBox label="Car Type" value={car?.category} />
+                <InfoBox
+                  label="Power"
+                  value={car?.power ? car?.power : "none"}
+                />
+                <InfoBox label="Fuel" value={car?.fuelType} />
+                <InfoBox label="Gear" value={car?.transmission} />
+                <InfoBox label="Total Seats" value={car?.seats} />
+                <InfoBox label="Milleage" value={car?.milleage} />
+                <InfoBox label="Year" value={car?.year} />
               </div>
               {/* Additional Information */}
               <div className="mt-6">
@@ -134,9 +119,9 @@ const DetailsPage = () => {
                   Address & Description
                 </h2>
                 <ul className=" text-gray-600">
-                  <li>{address}</li>
+                  <li>{car?.address}</li>
                   <hr />
-                  <li>{description}</li>
+                  <li>{car?.description}</li>
                 </ul>
               </div>
             </div>
@@ -161,8 +146,8 @@ const DetailsPage = () => {
         {/* Right Section - Booking or Additional Info */}
         <div className="w-full lg:w-1/3">
           <BookingForm
-            carId={id}
-            rentPerDay={rentPerDay}
+            carId={car?.id}
+            rentPerDay={car?.rentPerDay}
             disableDates={disabledDates}
           />
         </div>

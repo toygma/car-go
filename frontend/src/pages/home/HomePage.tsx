@@ -38,7 +38,7 @@ const HomePage = () => {
   };
 
   const filters = {
-    status: "Draft",
+    status: "Active",
     ...(category && { category }),
     ...(brand && { brand }),
     ...(transmission && { transmission }),
@@ -50,7 +50,9 @@ const HomePage = () => {
     query,
   };
 
-  const { data, loading, error } = useQuery(GET_ALL_CARS, { variables });
+  const { data, loading, error } = useQuery(GET_ALL_CARS, {
+    variables,
+  });
   console.log("data:", data);
 
   useEffect(() => {
@@ -108,7 +110,7 @@ const HomePage = () => {
         <SectionAutlines />
       </div>
       {/* SECTION CARD */}
-      <div className="container mx-auto min-h-screen mb-44">
+      <div className="container mx-auto min-h-screen mb-44 mt-32">
         <Title title="Car's" />
         <div className="flex md:flex-row flex-col gap-4 ">
           <div className="md:w-1/4 w-full">

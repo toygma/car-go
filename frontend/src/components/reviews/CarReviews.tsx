@@ -102,19 +102,19 @@ const CarReviews = ({ carId, reviews, refetchCar, canReview }: Props) => {
         </CardHeader>
       </Card>
 
-      {reviews.length > 0 && (
+      {reviews?.length > 0 && (
         <Card className="mt-10">
           <CardHeader className="bg-muted/25">
             <div className="grid gap-0.5">
               <CardTitle className="group flex items-center gap-2 mb-5 text-2xl">
                 <p className="text-2xl font-bold mt-5">
-                  {reviews.length} Reviews
+                  {reviews?.length} Reviews
                 </p>
               </CardTitle>
               <div className="text-sm text-muted-foreground">
                 <div className="px-8">
-                  {reviews.map((review: IReview) => (
-                    <div key={review.id}>
+                  {reviews?.map((review: IReview) => (
+                    <div key={review?.id}>
                       <DropdownMenuSeparator />
                       <div className="flex my-5">
                         <Avatar className="h-20 w-20">

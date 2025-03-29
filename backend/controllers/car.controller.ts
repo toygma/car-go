@@ -61,6 +61,7 @@ export const getCarById = catchAsyncErrors(async (carId: string) => {
       model: "User",
     },
   });
+  console.log("🚀 ~ car ~ car:", car);
   if (!car) throw new NotFoundError("Car not found");
   return car;
 });

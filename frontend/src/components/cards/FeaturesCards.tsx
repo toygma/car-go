@@ -31,9 +31,9 @@ const FeaturesCards = ({ cars }: ICarProps) => {
   return (
     <Card className="w-full flex md:flex-row flex-col md:h-[250px] h-full hover:scale-105 transition-all duration-300">
       <Link to={`/car/details/${id}`} className="cursor-pointer">
-        {images[1]?.url ? (
+        {images[0]?.url ? (
           <img
-            src={images[1]?.url}
+            src={images[0]?.url}
             className="lg:w-[250px]   h-[250px] object-cover rounded-md rounded-r-none"
             alt="car-audi"
           />

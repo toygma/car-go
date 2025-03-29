@@ -30,10 +30,9 @@ const PORT = process.env.PORT || 5000;
 DbConnect();
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-  app.get("*", (req: express.Request, res: express.Response) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
   });
 }
 

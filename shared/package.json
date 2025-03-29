@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "concurrently \"rimraf dist\" \"tsc -b\""
+    "build": "rimraf dist && tsc -b"
   },
   "keywords": [],
   "author": "",

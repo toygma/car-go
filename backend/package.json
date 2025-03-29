@@ -9,7 +9,7 @@
     "build:backend": "npm install ../shared && npm install && tsc",
     "build:shared": "cd ../shared && npm run build",
     "build:frontend": "cd ../frontend && npm install && npm run build",
-    "build": "concurrently \"npm run build:shared\" \"npm run build:frontend\" \"npm run build:backend\""
+    "build": "npm run build:shared && npm run build:frontend && npm run build:backend"
   },
   "keywords": [],
   "author": "",

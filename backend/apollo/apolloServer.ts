@@ -24,7 +24,7 @@ import { couponResolvers } from "../graphql/resolvers/coupon.resolvers";
 import { couponTypeDefs } from "../graphql/typeDefs/coupon.typeDefs";
 import { createServer } from "http";
 import { WebSocketServer } from "ws";
-import { useServer } from "graphql-ws/use/ws";
+import { useServer } from "graphql-ws/lib/use/ws";
 
 interface CustomJWTPayload {
   _id: string;

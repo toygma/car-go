@@ -70,6 +70,15 @@ export const bookingTypeDefs = gql`
     pagination: Pagination
   }
 
+  type NewBookingAlert {
+    car: String
+    amount: Float
+  }
+
+  type Subscription {
+    newBookingAlert: NewBookingAlert
+  }
+
   type Mutation {
     createBooking(bookingInput: BookingInput!): Booking!
     updateBooking(

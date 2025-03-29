@@ -4,6 +4,7 @@ import Booking from "../models/booking.model";
 import { BookingInput } from "../types/booking.types";
 import { NotFoundError } from "../utils/errorHandler";
 import APIFilters from "../utils/apiFilters";
+import { pubsub } from "../apollo/pubsub";
 
 interface SalesData {
   date: string;
@@ -20,7 +21,7 @@ interface SalesStats {
 }
 
 export const getAllBookings = catchAsyncErrors(
-  async (page: number,  query: string) => {
+  async (page: number, query: string) => {
     const resPerPage = 4;
     const searchQuery = new APIFilters(Booking)
       .search(query)
@@ -31,7 +32,7 @@ export const getAllBookings = catchAsyncErrors(
     const totalCount = bookings.length;
 
     searchQuery.pagination(page, resPerPage);
-    
+
     bookings = await searchQuery.model.clone();
 
     return { bookings, pagination: { totalCount, resPerPage } };
@@ -44,6 +45,14 @@ export const createBooking = catchAsyncErrors(
       ...bookingInput,
       user: userId,
     });
+    const booking = await newBooking.populate("car");
+    pubsub.publish("NEW_BOOKING", {
+      newBookingAlert: {
+        car: booking?.car?.name,
+        amount: booking?.amount?.total,
+      },
+    });
+
     return newBooking;
   }
 );
@@ -155,19 +164,17 @@ export const myBookings = catchAsyncErrors(
   }
 );
 
-export const deleteBooking = catchAsyncErrors(
-  async (bookingId: string) => {
-    const booking = await Booking.findById(bookingId);
+export const deleteBooking = catchAsyncErrors(async (bookingId: string) => {
+  const booking = await Booking.findById(bookingId);
 
-    if (!booking) {
-      throw new NotFoundError("Booking not found");
-    }
-
-    await booking?.deleteOne()
-
-    return true;
+  if (!booking) {
+    throw new NotFoundError("Booking not found");
   }
-);
+
+  await booking?.deleteOne();
+
+  return true;
+});
 
 //sales data give
 

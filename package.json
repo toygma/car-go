@@ -53,7 +53,7 @@
     "node-geocoder": "^4.4.1",
     "nodemailer": "^6.10.0",
     "nodemon": "^3.1.9",
-    "shared": "file:../shared",
+    "shared": "file:./shared",
     "stripe": "^17.7.0",
     "ws": "^8.18.1"
   }

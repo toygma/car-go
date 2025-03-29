@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { startApolloServer } from "./apollo/apolloServer";
 import path from "path";
-
+const __dirname = path.resolve();
 const app = express();
 dotenv.config();
 app.use(

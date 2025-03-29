@@ -34,11 +34,11 @@ const FeaturesCards = ({ cars }: ICarProps) => {
         {images[1]?.url ? (
           <img
             src={images[1]?.url}
-            className="lg:w-[300px] xl:w-full w-full  h-[250px] object-cover rounded-md rounded-r-none"
+            className="lg:w-[250px]   h-[250px] object-cover rounded-md rounded-r-none"
             alt="car-audi"
           />
         ) : (
-          <CarFront color="#e3e3e3" className="w-[300px] h-[250px]" />
+          <CarFront color="#e3e3e3" className="w-[250px] h-[250px]" />
         )}
       </Link>
       <div>

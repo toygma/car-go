@@ -74,7 +74,6 @@ export async function startApolloServer(app: Application) {
   const apolloServer = new ApolloServer({
     schema: schemaWithMiddleware,
     formatError: (err) => {
-      console.error("🔥 GraphQL Error:", err);
       return err;
     },
     plugins: [
@@ -123,6 +122,7 @@ export async function startApolloServer(app: Application) {
     })
   );
   const PORT = process.env.PORT || 5000;
+
   app.post("/api/payment/webhook", async (req: Request, res: Response) => {
     const signature = req.headers["stripe-signature"];
     const rawBody = req.rawBody;
@@ -135,7 +135,7 @@ export async function startApolloServer(app: Application) {
     }
   });
 
-  app.listen(PORT, () => {
+  httpServer.listen(PORT, () => {
     console.log(`Server is running on port ${PORT} `);
   });
 }

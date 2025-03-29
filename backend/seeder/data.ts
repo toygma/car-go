@@ -8,16 +8,16 @@ export const cars = [
     address: "New York City, NY",
     images: [
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/yiw9yyccugxyrahendi0.png",
-        public_id: "go-rental/yiw9yyccugxyrahendi0",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.png",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/nvqu7uzoutuv83t2nb15.jpg",
-        public_id: "go-rental/nvqu7uzoutuv83t2nb15",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/go-rental/dr10lytnymzyidfpjyoe.jpg",
-        public_id: "go-rental/dr10lytnymzyidfpjyoe",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
     ],
     year: 2012,
@@ -100,16 +100,16 @@ export const cars = [
     address: "1399 E Esther St, Orlando, FL 32806, USA",
     images: [
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/yiw9yyccugxyrahendi0.png",
-        public_id: "go-rental/yiw9yyccugxyrahendi0",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.png",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/nvqu7uzoutuv83t2nb15.jpg",
-        public_id: "go-rental/nvqu7uzoutuv83t2nb15",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/go-rental/dr10lytnymzyidfpjyoe.jpg",
-        public_id: "go-rental/dr10lytnymzyidfpjyoe",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
     ],
     year: 2011,
@@ -132,16 +132,16 @@ export const cars = [
     address: "3501 Shamrock Ct, Orlando, FL 32806, USA",
     images: [
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/yiw9yyccugxyrahendi0.png",
-        public_id: "go-rental/yiw9yyccugxyrahendi0",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.png",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/nvqu7uzoutuv83t2nb15.jpg",
-        public_id: "go-rental/nvqu7uzoutuv83t2nb15",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/go-rental/dr10lytnymzyidfpjyoe.jpg",
-        public_id: "go-rental/dr10lytnymzyidfpjyoe",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
     ],
     year: 2017,
@@ -164,16 +164,16 @@ export const cars = [
     address: "5910 Boca Raton Dr, Dallas, TX 75230, USA",
     images: [
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/yiw9yyccugxyrahendi0.png",
-        public_id: "go-rental/yiw9yyccugxyrahendi0",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.png",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/nvqu7uzoutuv83t2nb15.jpg",
-        public_id: "go-rental/nvqu7uzoutuv83t2nb15",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/go-rental/dr10lytnymzyidfpjyoe.jpg",
-        public_id: "go-rental/dr10lytnymzyidfpjyoe",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
     ],
     year: 2015,
@@ -196,16 +196,16 @@ export const cars = [
     address: "6992 Lavendale Ave, Dallas, TX 75230, USA",
     images: [
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/yiw9yyccugxyrahendi0.png",
-        public_id: "go-rental/yiw9yyccugxyrahendi0",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.png",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/nvqu7uzoutuv83t2nb15.jpg",
-        public_id: "go-rental/nvqu7uzoutuv83t2nb15",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/go-rental/dr10lytnymzyidfpjyoe.jpg",
-        public_id: "go-rental/dr10lytnymzyidfpjyoe",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
     ],
     year: 2010,
@@ -228,16 +228,16 @@ export const cars = [
     address: "5667 Boaz St, Dallas, TX 75209, USA",
     images: [
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/yiw9yyccugxyrahendi0.png",
-        public_id: "go-rental/yiw9yyccugxyrahendi0",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.png",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/go-rental/nvqu7uzoutuv83t2nb15.jpg",
-        public_id: "go-rental/nvqu7uzoutuv83t2nb15",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705683/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
       {
-        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/go-rental/dr10lytnymzyidfpjyoe.jpg",
-        public_id: "go-rental/dr10lytnymzyidfpjyoe",
+        url: "https://res.cloudinary.com/dpojqk4ty/image/upload/v1739705682/gorental/cars/jqm3upgx3xnf5iyacoqq.jpg",
+        public_id: "gorental/cars/jqm3upgx3xnf5iyacoqq",
       },
     ],
     year: 2017,

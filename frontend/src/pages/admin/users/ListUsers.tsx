@@ -33,7 +33,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Search, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { IUser } from "shared";
+import { IUser } from "shared/src/interfaces";
 import { UsersDialogue } from "./partials/UsersDialogue";
 import { DELETE_USER_MUTATION } from "@/graphql/mutations/user.mutations";
 

@@ -29,7 +29,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Search, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { IReview } from "shared";
+import { IReview } from "shared/src/interfaces";
 import { GET_ALL_REVIEWS } from "@/graphql/queries/review.queries";
 import { DELETE_REVIEW_MUTATION } from "@/graphql/mutations/review.mutation";
 

@@ -3,7 +3,7 @@ import SectionRepair from "./partials/sectionRepair/SectionRepair";
 import FeaturesCards from "@/components/cards/FeaturesCards";
 import Title from "@/shared/Title";
 import { GET_ALL_CARS } from "@/graphql/queries/car.queries";
-import { ICar } from "shared";
+import { ICar } from "shared/src/interfaces";
 import Loading from "@/components/custom/Loading";
 import Sidebar from "./partials/sidebar/Sidebar";
 import { useSearchParams } from "react-router-dom";
@@ -52,7 +52,7 @@ const HomePage = () => {
 
   const { data, loading, error } = useQuery(GET_ALL_CARS, { variables });
   console.log("data:", data);
-  
+
   useEffect(() => {
     if (error) {
       toastNotification(error);

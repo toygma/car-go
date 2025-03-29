@@ -3,7 +3,7 @@ import { GET_CAR_BY_ID } from "@/graphql/queries/car.queries";
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { ICar } from "shared";
+import { ICar } from "shared/src/interfaces";
 import moment from "moment";
 import StarRatings from "react-star-ratings";
 import NotFound from "@/components/custom/NotFound";

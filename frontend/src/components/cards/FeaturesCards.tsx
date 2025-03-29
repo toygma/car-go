@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { CarFront, Dot } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { ICar } from "shared";
+import { ICar } from "shared/src/interfaces";
 import StarRatings from "react-star-ratings";
 
 interface ICarProps {

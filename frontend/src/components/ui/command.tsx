@@ -11,7 +11,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-function Command({ className, ...props }, ref: any) {
+const Command = React.forwardRef<
+  HTMLInputElement,
+  { className?: string; children?: React.ReactNode }
+>(({ className, ...props }, ref) => {
   return (
     <CommandPrimitive
       ref={ref}
@@ -23,7 +26,8 @@ function Command({ className, ...props }, ref: any) {
       {...props}
     />
   );
-}
+});
+Command.displayName = "Command";
 
 function CommandDialog({
   title = "Command Palette",

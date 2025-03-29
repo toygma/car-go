@@ -14,7 +14,7 @@ import { toast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { formatDate, toastNotification } from "@/helpers/helpers";
 
-import { IBooking } from "shared";
+import { IBooking } from "shared/src/interfaces";
 import { Pencil } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {

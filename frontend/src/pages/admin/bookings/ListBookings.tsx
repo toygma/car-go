@@ -30,7 +30,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Search, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { IBooking } from "shared";
+import { IBooking } from "shared/src/interfaces";
 import { BookingDialogue } from "./partials/BookingDialogue";
 import { DELETE_BOOKING_MUTATION } from "@/graphql/mutations/booking.mutation";
 

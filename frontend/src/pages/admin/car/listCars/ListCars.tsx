@@ -38,7 +38,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { ICar } from "shared";
+import { ICar } from "shared/src/interfaces";
 
 const ListCars = () => {
   const [searchParams] = useSearchParams();

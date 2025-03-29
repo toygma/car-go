@@ -11,15 +11,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { CarFront, Dot } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ICar } from "shared";
 import StarRatings from "react-star-ratings";
 import { Button } from "@/components/ui/button";
 import Loading from "@/components/custom/Loading";
+import { ICar } from "shared/src/interfaces";
 const ProductList = () => {
   const [searchParams] = useSearchParams();
   const variables = { searchParams };
   const { data, loading } = useQuery(GET_ALL_CARS, { variables });
-  console.log("🚀 ~ ProductList ~ data:", data);
 
   if (loading) {
     return <Loading />;

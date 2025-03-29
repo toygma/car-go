@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node dist/app.js",
+    "start": "cross-env NODE_ENV=production  node dist/app.js",
     "dev": "nodemon --exec ts-node app.ts",
     "seeder": "tsc seeder/seeder.ts --outDir .temp && node .temp/seeder/seeder.js && rimraf .temp",
     "build:backend": "npm install ../shared && npm install && tsc",

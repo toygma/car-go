@@ -7,8 +7,8 @@
     "dev": "nodemon --exec ts-node app.ts",
     "seeder": "tsc seeder/seeder.ts --outDir .temp && node .temp/seeder/seeder.js && rimraf .temp",
     "build:backend": "npm install && tsc",
-    "build:shared": "cd ../shared && npm run build",
-    "build:frontend": "cd ../frontend && npm install && npm run build",
+    "build:shared": "cd ./shared && npm run build",
+    "build:frontend": "cd ./frontend && npm install && npm run build",
     "build": "npm run build:shared && npm run build:frontend && npm run build:backend"
   },
   "keywords": [],

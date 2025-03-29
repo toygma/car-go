@@ -4,6 +4,7 @@ import MainLayout from "@/layouts/MainLayout";
 import React, { Suspense } from "react";
 import ProtectedRoute from "./ProtectedRoute";
 import PaymentMethod from "@/pages/payment/PaymentMethod";
+import ProductList from "@/pages/productList/ProductList";
 
 const HomePage = React.lazy(() => import("@/pages/home/HomePage"));
 const DetailsPage = React.lazy(() => import("@/pages/details/DetailsPage"));
@@ -44,6 +45,14 @@ export const MainRoutes = {
       element: (
         <Suspense fallback={<Loading />}>
           <PaymentMethod />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/productList",
+      element: (
+        <Suspense fallback={<Loading />}>
+          <ProductList />
         </Suspense>
       ),
     },

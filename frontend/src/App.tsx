@@ -6,7 +6,7 @@ import { userVar } from "./apollo/apolloVars";
 import { useEffect } from "react";
 import { toast } from "./hooks/use-toast";
 const App = () => {
-  const { data, error } = useSubscription(NEW_BOOKING_SUBSCRIPTION);
+  const { data } = useSubscription(NEW_BOOKING_SUBSCRIPTION);
 
   const user = useReactiveVar(userVar);
 

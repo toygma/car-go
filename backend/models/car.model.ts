@@ -128,7 +128,7 @@ carSchema.virtual("ratings").get(function () {
 
   const value = numOfReviews > 0 ? ratingsSum / numOfReviews : 0;
 
-  return { value, count: numOfReviews };
+  return { value: value?.toFixed(2), count: numOfReviews };
 });
 const Car = mongoose.model<ICar>("Car", carSchema);
 

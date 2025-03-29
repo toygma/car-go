@@ -31,11 +31,11 @@ const RepairRight = () => {
   const navigate = useNavigate();
   const start_year = searchParams.get("start_year") || "";
   const finish_year = searchParams.get("finish_year") || "";
-  const min_mileage = searchParams.get("min_mileage")|| "";
-  const max_mileage = searchParams.get("max_mileage")|| "";
-  const brand = searchParams.get("brand")|| "";
-  const category = searchParams.get("category")|| "";
-  const transmission = searchParams.get("transmission")|| "";
+  const min_mileage = searchParams.get("min_mileage") || "";
+  const max_mileage = searchParams.get("max_mileage") || "";
+  const brand = searchParams.get("brand") || "";
+  const category = searchParams.get("category") || "";
+  const transmission = searchParams.get("transmission") || "";
 
   //year
   const yearOptions = Array.from({ length: 21 }, (_, i) => {
@@ -90,9 +90,8 @@ const RepairRight = () => {
         updatedSearchParams.delete(key);
       }
     });
-    const newPathname = `${
-      window.location.pathname
-    }?${updatedSearchParams.toString()}`;
+    const newPathname = `/productList?${updatedSearchParams.toString()}`;
+
     navigate(newPathname);
   };
   return (

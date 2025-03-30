@@ -1,5 +1,6 @@
 ![Project Banner](https://github.com/utkbkts/car-go/blob/main/FireShot%20Capture%20002%20-%20Car%20Go%20-%20%5Bcar-go-rent.onrender.com%5D.png?raw=true)
-
+Admin email:utkbktss5@gmail.com
+Admin password: 123123123
 # 🚀 Project Name
 
 ![GitHub Stars](https://img.shields.io/github/stars/utkbkts/car-go?style=flat-square)  
@@ -7,7 +8,7 @@
 ![GitHub License](https://img.shields.io/github/license/utkbkts/car-go?style=flat-square)  
 
 
-> **A short and impactful description**: Summarize what your project does here.
+> **A short description**:While doing this project, I had the idea of ​​integrating a daily rental car payment system and managing all of these from the admin panel. I set out by designing the plans and the course of events. It was very good in terms of convenience that we could manage all the activities on the page on the admin page. You can also provide the controls, the admin username and password are just above.
 
 ## 🎯 Features
 - ✅ **Feature 1**: Users can easily filter and find cars based on their preferences, such as brand, model, and rental duration.

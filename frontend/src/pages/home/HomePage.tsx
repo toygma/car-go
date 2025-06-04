@@ -8,8 +8,7 @@ import Loading from "@/components/custom/Loading";
 import Sidebar from "./partials/sidebar/Sidebar";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "@/components/custom/Pagination";
-import { useEffect, useState } from "react";
-import { toastNotification } from "@/helpers/helpers";
+import {  useState } from "react";
 import SectionDetails from "./partials/sectionDetails/SectionDetails";
 import { images } from "./slider/data/data";
 import SliderOne from "./slider/partials/SliderOne";
@@ -38,7 +37,7 @@ const HomePage = () => {
   };
 
   const filters = {
-    status: "Active",
+    status: "Draft",
     ...(category && { category }),
     ...(brand && { brand }),
     ...(transmission && { transmission }),
@@ -50,16 +49,11 @@ const HomePage = () => {
     query,
   };
 
-  const { data, loading, error } = useQuery(GET_ALL_CARS, {
+  const { data, loading } = useQuery(GET_ALL_CARS, {
     variables,
   });
-  console.log("data:", data);
+  console.log(data,variables)
 
-  useEffect(() => {
-    if (error) {
-      toastNotification(error);
-    }
-  }, [error]);
 
   if (loading) {
     return <Loading fullScreen={true} size={60} />;

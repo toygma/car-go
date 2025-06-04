@@ -20,12 +20,12 @@ export const carTransmission = Object.values(CarTransmissions).map((value) => ({
 
 export const carSeats = Object.values(CarSeats).map((value) => ({
   value,
-  label: value,
+  label: value.toString(),
 }));
 
 export const carDoors = Object.values(CarDoors).map((value) => ({
   value,
-  label: value,
+  label: value.toString(),
 }));
 
 export const carFuelTypes = Object.values(CarFuelTypes).map((value) => ({

@@ -1,5 +1,7 @@
-declare module "http" {
-  interface IncomingMessage {
-    rawBody: any;
+import 'express';
+
+declare module 'express-serve-static-core' {
+  interface Request {
+    rawBody?: Buffer;
   }
 }

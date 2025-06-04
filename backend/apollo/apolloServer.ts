@@ -125,7 +125,7 @@ export async function startApolloServer(app: Application) {
 
   app.post("/api/payment/webhook", async (req: Request, res: Response) => {
     const signature = req.headers["stripe-signature"];
-    const rawBody = req.rawBody;
+     const rawBody = req.body;
     const success = await webhookHandler(signature, rawBody);
 
     if (success) {

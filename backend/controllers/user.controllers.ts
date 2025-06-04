@@ -72,9 +72,9 @@ export const updateUserProfile = catchAsyncErrors(
 
     const userEmail = await User.findOne({ email: userData.email });
 
-    if (userEmail) {
-      throw new Error("Email is being used");
-    }
+    if (userEmail && userEmail._id.toString() !== userId) {
+  throw new Error("Email is being used");
+}
 
     user?.set(userData);
     await user.save();

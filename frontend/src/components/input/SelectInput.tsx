@@ -62,7 +62,7 @@ const SelectInput = ({
                 <SelectContent>
                   {options.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                      {option.label.toString()}
                     </SelectItem>
                   ))}
                 </SelectContent>

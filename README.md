@@ -1,7 +1,7 @@
 ![Project Banner](https://github.com/utkbkts/car-go/blob/main/FireShot%20Capture%20002%20-%20Car%20Go%20-%20%5Bcar-go-rent.onrender.com%5D.png?raw=true)
 Admin email:utkbktss5@gmail.com
 Admin password: 123123123
-# 🚀 Project Name
+# 🚀 CAR-GO
 
 ![GitHub Stars](https://img.shields.io/github/stars/utkbkts/car-go?style=flat-square)  
 ![GitHub Forks](https://img.shields.io/github/forks/utkbkts/car-go?style=flat-square)  
